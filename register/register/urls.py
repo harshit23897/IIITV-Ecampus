@@ -6,10 +6,9 @@ from django.views.static import serve
 from . import views
 from registration.backends.hmac.views import RegistrationView
 from .forms import NewRegistrationForm
-from register.course.views import index
 
 urlpatterns = [
-    url(r'^$', index, name='index'),
+    url(r'^$', views.index, name='index'),
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/register/$', RegistrationView.as_view(form_class=NewRegistrationForm), name='registration_register'),
     url(r'^accounts/', include('registration.backends.hmac.urls')),
