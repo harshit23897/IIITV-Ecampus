@@ -8,4 +8,6 @@ def index(request):
     context = {}
     return HttpResponse(template.render(context, request))
 
+def hello(request):
+    print('hello')
 
