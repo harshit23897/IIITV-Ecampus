@@ -1,0 +1,15 @@
+body {
+    background-color: #fff;
+    width: 800px;
+    margin: 0 auto;
+    font-family: 'Open Sans', sans-serif;
+}
+form {
+    margin: 20px 0;
+}
+#login {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    text-align: right;
+}

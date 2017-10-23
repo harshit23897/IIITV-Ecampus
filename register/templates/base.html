@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+        <title>IIITV Ecampus</title>
+        {% load static %}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure-min.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+    </head>
+    <body>
+    <header>
+        <h1>{% block title %}IIITV Ecampus{% endblock %}</h1>
+        <div id="login">
+            {% if user.is_authenticated %}
+                Hey {{ user.username }}, <a href="{% url 'auth_logout' %}?next=/">logout</a>
+            {% else %}
+                Hello student,  <a href="{% url 'auth_login' %}">login (register)</a>
+            {% endif %}
+        </div>
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+</html>
