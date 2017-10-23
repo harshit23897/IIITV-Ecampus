@@ -12,3 +12,6 @@ class NewRegistrationForm(RegistrationFormUniqueEmail):
         if "@iiitvadodara.ac.in" not in cleaned_data:
             raise forms.ValidationError("You must have a IIIT Vadodara email address to register.")
         return cleaned_data
+
+    def check(self):
+        print('Hello')
