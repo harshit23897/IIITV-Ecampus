@@ -8,8 +8,10 @@ from registration.backends.hmac.views import RegistrationView
 from .forms import NewRegistrationForm
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
+    url(r'^$', views.home, name='index'),
     url(r'^admin/', admin.site.urls),
+    url(r'^faculty/', include('register.faculty.urls')),
+    url(r'^student/', include('register.student.urls')),
     url(r'^accounts/register/$', RegistrationView.as_view(form_class=NewRegistrationForm), name='registration_register'),
     url(r'^accounts/', include('registration.backends.hmac.urls')),
 ]
