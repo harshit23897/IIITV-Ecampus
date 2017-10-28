@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<table border="1" colspan="2" width="100%">
+   <tr>
+     <th width="30%">File Name</td>
+     <th width="40%">Description</td>
+     <th width="30%">Download</td>
+   </tr>
+ {% for file in course_material %}
+   <tr>
+     <td width="60%">{{ file.filename }}</td>
+     <td width="60%">{{ file.description }}</td>
+     <td width="40%" align="center"><a href="/download/{{file.filename}}" style="text-decoration:None">Download here</a></td>
+   </tr>
+ {% endfor %}
+</table>
+{% endblock %}
