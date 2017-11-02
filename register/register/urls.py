@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^course/', include('register.course.urls')),
     url(r'^faculty/', include('register.faculty.urls')),
     url(r'^student/', include('register.student.urls')),
+    url(r'^announcements/', include('register.announcements.urls')),
     url(r'^accounts/register/$', RegistrationView.as_view(form_class=NewRegistrationForm), name='registration_register'),
     url(r'^accounts/', include('registration.backends.hmac.urls')),
     url(r'^download/(?P<file_name>.+)$', download, name='course_material_download'),

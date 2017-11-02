@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'register.faculty',
     'register.student',
     'register.course',
+    'register.announcements',
 ]
 
 MIDDLEWARE = [
