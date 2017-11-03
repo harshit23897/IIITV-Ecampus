@@ -16,8 +16,10 @@ def course_material_upload(request):
     if request.method == 'POST':
         form = CourseMaterialForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            return redirect('course_material_upload')
+            unsaved_form = form.save(commit=False)
+        unsaved_form.faculty = request.user
+        unsaved_form.save()
+        return redirect('course_material_upload')
     else:
         form = CourseMaterialForm()
 
@@ -26,7 +28,7 @@ def course_material_upload(request):
     })
 
 def files_list(request):
-    material = CourseMaterial.objects.all()
+    material = CourseMaterial.objects.filter(faculty__username__contains=request.user)
     return render(request, 'course_material_view.html',
                               {'course_material': material,
                                'path':settings.MEDIA_ROOT},

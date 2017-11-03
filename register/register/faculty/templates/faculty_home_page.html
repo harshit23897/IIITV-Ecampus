@@ -4,5 +4,7 @@
 {% if user.is_authenticated %}
     <p><strong>Dear {{ user.username }} faculty, glad to have you here!</strong></p>
     <p>This is IIITV Ecampus</p>
+    <p><a href="{% url 'course_material_upload' %}">Course Material Upload</a></p>
+    <p><a href="{% url 'course_material_view' %}">View Course Material</a></p>
 {% endif %}
 {% endblock %}
