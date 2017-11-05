@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <table border="1" colspan="2" width="100%">
+        <tr>
+            <th width="30%">Course Name</td>
+        </tr>
+        {% for course in courses_of_current_faculty %}
+        <tr>
+            <td width="30%" align="center">{{ course.course_no }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

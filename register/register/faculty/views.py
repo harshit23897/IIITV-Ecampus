@@ -1,8 +1,5 @@
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render
-from django.views.generic import TemplateView
-from django.views.generic.base import TemplateResponseMixin
-from django.shortcuts import render
 
 @login_required
 @user_passes_test(lambda u: u.groups.all()[0].name == 'faculty', login_url='/accounts/login/')

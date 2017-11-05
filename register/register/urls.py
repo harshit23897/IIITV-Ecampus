@@ -8,12 +8,14 @@ from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from registration.backends.hmac.views import RegistrationView
 from .forms import NewRegistrationForm
-from register.course.views import download
+from register.coursematerial.views import download
 
 urlpatterns = [
     url(r'^$', views.home, name='index'),
     url(r'^admin/', admin.site.urls),
+    url(r'^campus-admin/', include('register.campus_admin.urls')),
     url(r'^course/', include('register.course.urls')),
+    url(r'^course-material/', include('register.coursematerial.urls')),
     url(r'^faculty/', include('register.faculty.urls')),
     url(r'^student/', include('register.student.urls')),
     url(r'^announcements/', include('register.announcements.urls')),

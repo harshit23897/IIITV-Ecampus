@@ -47,8 +47,10 @@ INSTALLED_APPS = [
     'registration',
     'register.faculty',
     'register.student',
-    'register.course',
+    'register.coursematerial',
     'register.announcements',
+    'register.course',
+    'register.campus_admin',
 ]
 
 MIDDLEWARE = [
@@ -69,9 +71,11 @@ TEMPLATES = [
         'DIRS': [
             os.path.join(BASE_DIR, 'templates'),
             os.path.join(BASE_DIR, 'register', 'templates'),
-            os.path.join(BASE_DIR, 'register.faculty', 'templates'),
-            os.path.join(BASE_DIR, 'register.student', 'templates'),
-            os.path.join(BASE_DIR, 'register.course', 'templates'),
+            os.path.join(BASE_DIR, 'register/faculty', 'templates'),
+            os.path.join(BASE_DIR, 'register/student', 'templates'),
+            os.path.join(BASE_DIR, 'register/course', 'templates'),
+            os.path.join(BASE_DIR, 'register/campus_admin', 'templates/campus_admin'),
+            os.path.join(BASE_DIR, 'register/coursematerial', 'templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {

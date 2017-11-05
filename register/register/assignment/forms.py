@@ -4,4 +4,4 @@ from .models import CourseMaterial
 class CourseMaterialForm(forms.ModelForm):
     class Meta:
         model = CourseMaterial
-        fields = ('description', 'file', )
+        fields = ('description', 'file', 'course_no', )
