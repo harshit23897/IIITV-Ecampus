@@ -6,5 +6,6 @@ from django.views.static import serve
 from .views import facultyHomePage
 
 urlpatterns = [
-    url(r'^', facultyHomePage),
+    url(r'^$', facultyHomePage),
+    url(r'^course/', include('register.course.urls')),
 ]

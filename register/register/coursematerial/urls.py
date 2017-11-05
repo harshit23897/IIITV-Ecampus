@@ -4,6 +4,7 @@ from django.conf import settings
 from django.views.static import serve
 from django.views.generic import TemplateView
 
+app_name = 'coursematerial'
 from .views import course_material_upload, files_list, download
 
 urlpatterns = [

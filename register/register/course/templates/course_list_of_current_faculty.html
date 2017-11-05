@@ -7,7 +7,7 @@
         </tr>
         {% for course in courses_of_current_faculty %}
         <tr>
-            <td width="30%" align="center">{{ course.course_no }}</td>
+            <td><a width="30%" align="center" href="{% url 'course_detail_view' pk=course.course_no %}">{{ course.course_no }}</a></td>
         </tr>
         {% endfor %}
     </table>
