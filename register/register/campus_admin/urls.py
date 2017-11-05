@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from . import views
 
-app_name = 'campus_admin'
+# app_name = 'campus_admin'
 
 # For char .+ whereas for integer \d+
 urlpatterns=[
