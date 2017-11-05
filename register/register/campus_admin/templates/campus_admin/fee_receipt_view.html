@@ -1,0 +1,30 @@
+
+
+
+{% block head %}
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+{% endblock %}
+
+{% block content %}
+
+<table border="1" colspan="2" width="100%">
+   <tr>
+         <th width="40%" align="center"> SemesterNo </th>
+         <th width="30%" align="center"> Receipt No </th>
+         <th width="30%" text-align="center"> Status </th>
+
+   </tr>
+
+   <tr>
+        <td width="40%" align="center">{{ pk2 }}</td>
+        <td width="30%" align="center"> {{ fee.receiptId }} </td>
+        <td width="30%" align="center"> {{ fee.status }}</td>
+
+
+   </tr>
+
+</table>
+{% endblock %}
+

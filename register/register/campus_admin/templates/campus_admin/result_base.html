@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for i in batches %}
+<div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+            {{ i.batch }} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li> <a href="{% url 'result_base' pk=i.batch pk4='CS'%}">CS </a></li>
+            <li> <a href="{% url 'result_base' pk=i.batch pk4='IT'%}">IT </a></li>
+        </ul>
+</div>
+  <!--<br> <br>-->
+{% endfor %}
+
+{% endblock %}
+

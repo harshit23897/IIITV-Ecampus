@@ -20,8 +20,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
-DJANGO_ENV = os.getenv('DJANGO_ENV', 'production').lower()
+SECRET_KEY = 'ENiCa1uimBZNpDaRTCB9'
+DJANGO_ENV = 'local'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -45,6 +45,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'registration',
+    'register.faculty',
+    'register.student',
+    'register.coursematerial',
+    'register.announcements',
+    'register.course',
+    'register.campus_admin',
 ]
 
 MIDDLEWARE = [
@@ -65,6 +71,11 @@ TEMPLATES = [
         'DIRS': [
             os.path.join(BASE_DIR, 'templates'),
             os.path.join(BASE_DIR, 'register', 'templates'),
+            os.path.join(BASE_DIR, 'register/faculty', 'templates'),
+            os.path.join(BASE_DIR, 'register/student', 'templates'),
+            os.path.join(BASE_DIR, 'register/course', 'templates'),
+            os.path.join(BASE_DIR, 'register/campus_admin', 'templates/campus_admin'),
+            os.path.join(BASE_DIR, 'register/coursematerial', 'templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -138,8 +149,8 @@ ACCOUNT_ACTIVATION_DAYS = 7
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.getenv('GMAIL_SMTP_USER')
-EMAIL_HOST_PASSWORD = os.getenv('GMAIL_SMTP_PASSWORD')
+EMAIL_HOST_USER = 'testemailiiitv@gmail.com'
+EMAIL_HOST_PASSWORD = 'thisisnewpassword'
 
 
 # Static files (CSS, JavaScript, Images)
@@ -150,23 +161,27 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
 
+# This is the URL where media files will go
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, 'static'),
 )
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'level': os.getenv('DJANGO_LOG_LEVEL', 'ERROR'),
-        },
-    },
-}
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'console': {
+#             'class': 'logging.StreamHandler',
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['console'],
+#             'level': os.getenv('DJANGO_LOG_LEVEL', 'ERROR'),
+#         },
+#     },
+# }
