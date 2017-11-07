@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'registration',
     'register.faculty',
     'register.student',
-    'register.coursematerial',
     'register.announcements',
     'register.course',
     'register.campus_admin',
@@ -75,7 +74,6 @@ TEMPLATES = [
             os.path.join(BASE_DIR, 'register/student', 'templates'),
             os.path.join(BASE_DIR, 'register/course', 'templates'),
             os.path.join(BASE_DIR, 'register/campus_admin', 'templates/campus_admin'),
-            os.path.join(BASE_DIR, 'register/coursematerial', 'templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {

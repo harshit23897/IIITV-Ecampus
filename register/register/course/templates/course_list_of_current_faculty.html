@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% if user.is_authenticated %}
     <table border="1" colspan="2" width="100%">
         <tr>
             <th width="30%">Course Name</td>
         </tr>
         {% for course in courses_of_current_faculty %}
         <tr>
-            <td><a width="30%" align="center" href="{% url 'course_detail_view' pk=course.course_no %}">{{ course.course_no }}</a></td>
+            <td><a width="30%" align="center" href="{% url 'course:course_detail_view' pk=course.course_no %}">{{ course.course_no }}</a></td>
         </tr>
         {% endfor %}
     </table>
+{% endif %}
 {% endblock %}

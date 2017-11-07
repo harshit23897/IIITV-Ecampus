@@ -4,6 +4,6 @@
 {% if user.is_authenticated %}
     <p><strong>Dear {{ user.username }} faculty, glad to have you here!</strong></p>
     <p>This is IIITV Ecampus</p>
-    <p><a href="{% url 'course_list_of_faculty' %}">Courses</a></p>
+    <p><a href="{% url 'course:course_list_of_faculty' %}">Courses</a></p>
 {% endif %}
 {% endblock %}
