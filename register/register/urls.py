@@ -8,18 +8,18 @@ from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from registration.backends.hmac.views import RegistrationView
 from .forms import NewRegistrationForm
-from register.coursematerial.views import download
+from register.course.views import download
 
 urlpatterns = [
     url(r'^$', views.home, name='index'),
     url(r'^admin/', admin.site.urls),
-    url(r'^campus-admin/', include('register.campus_admin.urls')),
-    url(r'^course/', include('register.course.urls')),
-    url(r'^course-material/', include('register.coursematerial.urls')),
-    url(r'^faculty/', include('register.faculty.urls')),
-    url(r'^student/', include('register.student.urls')),
-    url(r'^announcements/', include('register.announcements.urls')),
-    url(r'^accounts/register/$', RegistrationView.as_view(form_class=NewRegistrationForm), name='registration_register'),
+    url(r'^campus-admin/', include('register.campus_admin.urls', namespace='campus_admin')),
+    url(r'^faculty/course/', include('register.course.urls', namespace='course')),
+    # url(r'^faculty/course/(?P<pk>.+)/assignment/', include('register.assignment.urls', namespace='assignment')),
+    url(r'^faculty/', include('register.faculty.urls', namespace='faculty')),
+    url(r'^student/', include('register.student.urls', namespace='student')),
+    url(r'^announcements/', include('register.announcements.urls', namespace='announcements')),
+    url(r'^accounts/register/', RegistrationView.as_view(form_class=NewRegistrationForm), name='registration_register'),
     url(r'^accounts/', include('registration.backends.hmac.urls')),
     url(r'^download/(?P<file_name>.+)$', download, name='course_material_download'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
