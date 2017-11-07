@@ -15,7 +15,21 @@ class course(models.Model):
 class CourseMaterial(models.Model):
     course_no = models.ForeignKey(course, to_field='course_no', null=True)
     description = models.CharField(max_length=255, blank=True)
-    file = models.FileField(upload_to='')
+    file = models.FileField(upload_to='course/')
+    uploaded_at = models.DateTimeField(auto_now_add=True, null=True)
+    faculty = models.ForeignKey(User, null=True)
+
+    @property
+    def filename(self):
+        return os.path.basename(self.file.name)
+
+    def __str__(self):
+        return os.path.basename(self.file.name)
+
+class AssignmentMaterial(models.Model):
+    course_no = models.ForeignKey(course, to_field='course_no', null=True)
+    description = models.CharField(max_length=255, blank=True)
+    file = models.FileField(upload_to='assignment/')
     uploaded_at = models.DateTimeField(auto_now_add=True, null=True)
     faculty = models.ForeignKey(User, null=True)
 

@@ -15,7 +15,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^campus-admin/', include('register.campus_admin.urls', namespace='campus_admin')),
     url(r'^faculty/course/', include('register.course.urls', namespace='course')),
-    # url(r'^faculty/course/(?P<pk>.+)/upload', include('register.coursematerial.urls', namespace='coursematerial')),
+    # url(r'^faculty/course/(?P<pk>.+)/assignment/', include('register.assignment.urls', namespace='assignment')),
     url(r'^faculty/', include('register.faculty.urls', namespace='faculty')),
     url(r'^student/', include('register.student.urls', namespace='student')),
     url(r'^announcements/', include('register.announcements.urls', namespace='announcements')),
