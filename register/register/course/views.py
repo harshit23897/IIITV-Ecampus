@@ -25,6 +25,7 @@ def course_list_of_faculty(request):
                   {'courses_of_current_faculty': courses_of_current_faculty})
 
 @login_required
+@user_passes_test(lambda u: u.groups.all()[0].name == 'faculty', login_url='/accounts/login/')
 def course_detail_view(request, pk):
     current_course = course.objects.filter(faculty__username__exact=request.user, course_no=pk)
     # print(courses_of_current_faculty)
@@ -42,7 +43,6 @@ def course_material_upload(request, pk):
     # print('Joker')
     if request.method == 'POST':
         form = CourseMaterialForm(request.POST, request.FILES)
-
         current_course = course.objects.filter(faculty__username__exact=request.user, course_no=pk)
         if form.is_valid():
             file = form.cleaned_data['file']
@@ -80,7 +80,6 @@ def files_list(request, pk):
 def assignment_material_upload(request, pk):
     if request.method == 'POST':
         form = AssignmentMaterialForm(request.POST, request.FILES)
-
         current_assignment = course.objects.filter(faculty__username__exact=request.user, course_no=pk)
         if form.is_valid():
             file = form.cleaned_data['file']

@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.auth.models import User
+from register.course.models import AssignmentMaterial
 from register.course.models import course
 
 class student(models.Model):
@@ -19,6 +20,13 @@ class student(models.Model):
 
     def __str__(self):
         return self.student_id
+
+class AssignmentSubmission(models.Model):
+    assignment = models.OneToOneField(AssignmentMaterial)
+    file = models.FileField(upload_to='assignment-submission/')
+    student = models.ForeignKey(User, null=True)
+
+
 
 
 
