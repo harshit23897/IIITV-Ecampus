@@ -31,6 +31,7 @@ class AssignmentMaterial(models.Model):
     course_no = models.ForeignKey(course, to_field='course_no', null=True)
     description = models.CharField(max_length=255, blank=True)
     file = models.FileField(upload_to='assignment/')
+    submission_last_date = models.DateTimeField(null=True)
     uploaded_at = models.DateTimeField(auto_now_add=True, null=True)
     faculty = models.ForeignKey(User, null=True)
 

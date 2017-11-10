@@ -25,6 +25,7 @@ class AssignmentSubmission(models.Model):
     assignment = models.OneToOneField(AssignmentMaterial)
     file = models.FileField(upload_to='assignment-submission/')
     student = models.ForeignKey(User, null=True)
+    uploaded_at = models.DateTimeField(auto_now_add=True, null=True)
 
 
 

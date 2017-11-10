@@ -5,6 +5,7 @@ import os
 
 from django import forms
 from django.conf import settings
+from django.core.validators import ValidationError
 from django.contrib.auth.decorators import login_required, user_passes_test
 from wsgiref.util import FileWrapper
 from django.http import Http404, HttpResponse
@@ -87,12 +88,14 @@ def assignment_material_upload(request, pk):
                 raise forms.ValidationError(_('Please keep filesize under 50 MB'))
             unsaved_form = form.save(commit=False)
             unsaved_form.faculty = request.user
-        try:
-            for temp in current_assignment:
-                unsaved_form.course_no = temp
-        except Exception as e:
-            print(str(e))
-        unsaved_form.save()
+            try:
+                for temp in current_assignment:
+                    unsaved_form.course_no = temp
+            except Exception as e:
+                print(str(e))
+            unsaved_form.save()
+        else:
+            print(form.errors)
         return redirect('course:assignment_material_upload', pk=pk)
     else:
         form = AssignmentMaterialForm()

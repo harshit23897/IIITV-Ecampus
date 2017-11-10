@@ -4,6 +4,8 @@ from django import forms
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.utils import timezone
+from django.utils.translation import ugettext as _
 from django.db.models import Q
 from django.http import Http404
 from django.views.generic.list import ListView
@@ -72,30 +74,20 @@ class AnnouncementView(LoginRequiredMixin, ListView):
 def student_assignment_files_list(request, pk):
     if request.method == 'POST':
         form = AssignmentSubmissionForm(request.POST, request.FILES)
-        current_assignment = course.objects.filter(course_no=pk)
-        # print(request.POST['file.id'])
-        if form.is_valid():
-            print('Hello')
+        current_assignment = AssignmentMaterial.objects.filter(id=request.POST['file.id'])
+        if form.is_valid() and timezone.now() <= current_assignment.first().submission_last_date:
             file = form.cleaned_data['file']
             if file._size > 5242880:
                 raise forms.ValidationError(_('Please keep filesize under 50 MB'))
             unsaved_form = form.save(commit=False)
-            # unsaved_form.faculty = request.user
-            unsaved_form.assignment_id = request.POST['file.id']
+            unsaved_form.assignment = current_assignment.first()
             unsaved_form.student = request.user
-            try:
-                for temp in current_assignment:
-                    unsaved_form.course_no = temp
-            except Exception as e:
-                print(str(e))
             unsaved_form.save()
+        else:
+            raise forms.ValidationError(_('The time of assignment submission has passed. Better luck next time.'))
         return redirect('student:student_home_page')
     else:
         material = AssignmentMaterial.objects.filter(course_no=pk)
-        # return render(request, 'student_assignment_files_list.html',
-        #               {'assignment_material': material,
-        #                'path': settings.MEDIA_ROOT},
-        #               )
         form = AssignmentSubmissionForm()
     return render(request, 'student_assignment_files_list.html', {
         'form': form,
