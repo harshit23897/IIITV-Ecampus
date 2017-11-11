@@ -8,6 +8,14 @@ from .validators import validate_file_extension
 class course(models.Model):
     course_no = models.CharField(max_length=20, unique=True)
     course_name = models.CharField(max_length=100, null=True, unique=True)
+    credits = models.IntegerField(null=True)
+    elective = models.NullBooleanField()
+    semester = models.IntegerField(null=True)
+    BRANCH = (
+        ('CS', 'Computer Science'),
+        ('IT', 'Information Technology'),
+    )
+    offered_to = models.CharField(max_length=20, null=True, choices=BRANCH)
     faculty = models.ManyToManyField(User)
 
     def __str__(self):

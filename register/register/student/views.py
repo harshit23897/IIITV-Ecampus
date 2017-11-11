@@ -10,7 +10,7 @@ from django.db.models import Q
 from django.http import Http404
 from django.views.generic.list import ListView
 from .forms import AssignmentSubmissionForm
-from .models import student
+from .models import student, AssignmentSubmission
 
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect
@@ -21,7 +21,6 @@ from register.course.models import course, CourseMaterial, AssignmentMaterial
 def student_home_page(request):
     student_ = student.objects.filter(student_id=request.user.email[:-19])
     if student_.count() == 0:
-        print('Hello')
         batch = request.user.email[:4]
         batch = batch
         program_ = request.user.email[4:6]
@@ -29,7 +28,7 @@ def student_home_page(request):
             program = 'CS'
         else:
             program = 'IT'
-
+        print(User.objects.get(email=request.user.email))
         student_ = student(user_student=User.objects.get(email=request.user.email),
                            student_id=request.user.email[:-19],
                            program=program,
@@ -75,14 +74,21 @@ def student_assignment_files_list(request, pk):
     if request.method == 'POST':
         form = AssignmentSubmissionForm(request.POST, request.FILES)
         current_assignment = AssignmentMaterial.objects.filter(id=request.POST['file.id'])
-        if form.is_valid() and timezone.now() <= current_assignment.first().submission_last_date:
-            file = form.cleaned_data['file']
-            if file._size > 5242880:
-                raise forms.ValidationError(_('Please keep filesize under 50 MB'))
+        assignment_submission = AssignmentSubmission.objects.filter(assignment=current_assignment,
+                                                                    student=request.user)
+        if (form.is_valid() and
+            timezone.now() <= current_assignment.first().submission_last_date and
+            assignment_submission.count() == 0):
             unsaved_form = form.save(commit=False)
-            unsaved_form.assignment = current_assignment.first()
+            current_file = unsaved_form.file
+            if current_file.size > 5242880:
+                raise forms.ValidationError(_('Please keep filesize under 50 MB'))
             unsaved_form.student = request.user
             unsaved_form.save()
+            unsaved_form.assignment.add(current_assignment.first())
+            unsaved_form.save()
+        elif assignment_submission.count() != 0:
+            raise forms.ValidationError(_('You already submitted.'))
         else:
             raise forms.ValidationError(_('The time of assignment submission has passed. Better luck next time.'))
         return redirect('student:student_home_page')

@@ -22,10 +22,13 @@ class student(models.Model):
         return self.student_id
 
 class AssignmentSubmission(models.Model):
-    assignment = models.OneToOneField(AssignmentMaterial)
+    assignment = models.ManyToManyField(AssignmentMaterial)
     file = models.FileField(upload_to='assignment-submission/')
     student = models.ForeignKey(User, null=True)
     uploaded_at = models.DateTimeField(auto_now_add=True, null=True)
+
+    def __str__(self):
+        return self.file.name
 
 
 
