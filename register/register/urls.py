@@ -28,7 +28,7 @@ urlpatterns += staticfiles_urlpatterns()
 
 if not settings.DEBUG:
     urlpatterns += [
-        url(r'^static/(?P<path>.*)$', serve, {
+        url(r'^staticfiles/(?P<path>.*)$', serve, {
             'document_root': settings.STATIC_ROOT,
         }),
     ]

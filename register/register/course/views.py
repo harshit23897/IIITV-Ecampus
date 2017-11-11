@@ -3,12 +3,16 @@ from __future__ import unicode_literals
 import mimetypes
 import os
 
+from django import forms
 from django.conf import settings
+from django.core.validators import ValidationError
 from django.contrib.auth.decorators import login_required, user_passes_test
 from wsgiref.util import FileWrapper
 from django.http import Http404, HttpResponse
 from django.shortcuts import render, redirect
+from django.template.defaultfilters import filesizeformat
 from django.utils.encoding import smart_str
+from django.utils.translation import ugettext_lazy as _
 from .forms import CourseMaterialForm, AssignmentMaterialForm
 from .models import course, CourseMaterial, AssignmentMaterial
 
@@ -22,6 +26,7 @@ def course_list_of_faculty(request):
                   {'courses_of_current_faculty': courses_of_current_faculty})
 
 @login_required
+@user_passes_test(lambda u: u.groups.all()[0].name == 'faculty', login_url='/accounts/login/')
 def course_detail_view(request, pk):
     current_course = course.objects.filter(faculty__username__exact=request.user, course_no=pk)
     # print(courses_of_current_faculty)
@@ -39,18 +44,20 @@ def course_material_upload(request, pk):
     # print('Joker')
     if request.method == 'POST':
         form = CourseMaterialForm(request.POST, request.FILES)
-
         current_course = course.objects.filter(faculty__username__exact=request.user, course_no=pk)
         if form.is_valid():
+            file = form.cleaned_data['file']
+            if file._size > 5242880:
+                raise forms.ValidationError(_('Please keep filesize under 50 MB'))
             unsaved_form = form.save(commit=False)
             unsaved_form.faculty = request.user
-        try:
-            for temp in current_course:
-                unsaved_form.course_no = temp
-        except Exception as e:
-            print(str(e))
-        unsaved_form.save()
-        return redirect('course:course_material_upload', pk=pk)
+            try:
+                for temp in current_course:
+                    unsaved_form.course_no = temp
+            except Exception as e:
+                print(str(e))
+            unsaved_form.save()
+            return redirect('course:course_material_upload', pk=pk)
     else:
         form = CourseMaterialForm()
 
@@ -74,17 +81,21 @@ def files_list(request, pk):
 def assignment_material_upload(request, pk):
     if request.method == 'POST':
         form = AssignmentMaterialForm(request.POST, request.FILES)
-
         current_assignment = course.objects.filter(faculty__username__exact=request.user, course_no=pk)
         if form.is_valid():
+            file = form.cleaned_data['file']
+            if file._size > 5242880:
+                raise forms.ValidationError(_('Please keep filesize under 50 MB'))
             unsaved_form = form.save(commit=False)
             unsaved_form.faculty = request.user
-        try:
-            for temp in current_assignment:
-                unsaved_form.course_no = temp
-        except Exception as e:
-            print(str(e))
-        unsaved_form.save()
+            try:
+                for temp in current_assignment:
+                    unsaved_form.course_no = temp
+            except Exception as e:
+                print(str(e))
+            unsaved_form.save()
+        else:
+            print(form.errors)
         return redirect('course:assignment_material_upload', pk=pk)
     else:
         form = AssignmentMaterialForm()

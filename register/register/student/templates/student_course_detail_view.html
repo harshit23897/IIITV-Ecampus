@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <p><a width="30%" align="center" href="{% url 'course:course_material_view' pk=pk %}">View Course Material</a></p>
+    <p><a width="30%" align="center" href="{% url 'student:student_assignment_files_list' pk=pk %}">View Assignment Material</a></p>
+    <p><a width="30%" align="center" href="{% url 'student:announcement_view' pk=pk %}">Announcements</a></p>
+{% endblock %}

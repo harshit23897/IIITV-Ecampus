@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 import os
 from django.contrib.auth.models import User
 from django.db import models
+from .validators import validate_file_extension
 
 class course(models.Model):
     course_no = models.CharField(max_length=20, unique=True)
@@ -15,7 +16,7 @@ class course(models.Model):
 class CourseMaterial(models.Model):
     course_no = models.ForeignKey(course, to_field='course_no', null=True)
     description = models.CharField(max_length=255, blank=True)
-    file = models.FileField(upload_to='course/')
+    file = models.FileField(upload_to='course/', validators=[validate_file_extension])
     uploaded_at = models.DateTimeField(auto_now_add=True, null=True)
     faculty = models.ForeignKey(User, null=True)
 
@@ -23,13 +24,14 @@ class CourseMaterial(models.Model):
     def filename(self):
         return os.path.basename(self.file.name)
 
-    def __str__(self):
-        return os.path.basename(self.file.name)
+    # def __str__(self):
+    #     return os.path.basename(self.file.name)
 
 class AssignmentMaterial(models.Model):
     course_no = models.ForeignKey(course, to_field='course_no', null=True)
     description = models.CharField(max_length=255, blank=True)
     file = models.FileField(upload_to='assignment/')
+    submission_last_date = models.DateTimeField(null=True)
     uploaded_at = models.DateTimeField(auto_now_add=True, null=True)
     faculty = models.ForeignKey(User, null=True)
 
@@ -39,6 +41,3 @@ class AssignmentMaterial(models.Model):
 
     def __str__(self):
         return os.path.basename(self.file.name)
-
-
-

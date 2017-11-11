@@ -34,6 +34,9 @@ else:
 
 ALLOWED_HOSTS = []
 
+#max file upload size
+MAX_UPLOAD_SIZE = "5242880"
+
 
 # Application definition
 
@@ -157,15 +160,15 @@ EMAIL_HOST_PASSWORD = 'thisisnewpassword'
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
-STATIC_URL = '/static/'
+STATIC_URL = '/staticfiles/'
 
 # This is the URL where media files will go
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Extra places for collectstatic to find static files.
+# Extra places for collectstatic to find staticfiles files.
 STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT, 'static'),
+    os.path.join(PROJECT_ROOT, '..', 'static'),
 )
 
 # LOGGING = {

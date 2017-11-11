@@ -1,27 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-        <title>IIITV Ecampus</title>
-        {% load static %}
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure-min.css">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
-    </head>
-    <body>
-    <header>
-        <h1>{% block title %}IIITV Ecampus{% endblock %}</h1>
-        <div id="login">
-            {% if user.is_authenticated %}
-                Hey {{ user.username }}, <a href="{% url 'auth_logout' %}?next=/">logout</a>
-            {% else %}
-                Hello student,  <a href="{% url 'auth_login' %}">login (register)</a>
-            {% endif %}
-        </div>
-    </header>
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
+    {% load static %}
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/IIITVE.css' %}">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+</head>
+<body>
+	<div class="Main">
+	 <h1 style="text-align: left; margin-left: 5%;"><img src="http://iiitvadodara.ac.in/img/IIITV_Logo_1x1_small.png" style="width: 100px">
+	 Indian Institute of Information Technology, Vadodara
+	</h1>
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+</div>
 </body>
 </html>
