@@ -136,3 +136,4 @@ def assignment_download(request, file_name):
     response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(file_name)
     return response
 
+
