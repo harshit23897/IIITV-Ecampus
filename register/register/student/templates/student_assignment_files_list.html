@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<table border="1" colspan="2" width="100%">
+   <tr>
+     <th width="20%">File Name</td>
+     <th width="20%">Description</td>
+     <th width="20%">Download</td>
+     <th width="20%">Submission Date</td>
+     <th width="20%">Upload</td>
+   </tr>
+ {% for file in assignment_material %}
+    <tr>
+     <td width="20%">{{ file.filename }}</td>
+     <td width="20%">{{ file.description }}</td>
+     <td width="20%" align="center"><a href="/download/assignment-material/{{file.filename}}" style="text-decoration:None">Download here</a></td>
+     <td width="20%">{{ file.submission_last_date }}</td>
+     <td width="20%" align="center"><form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" name="file.id" value="{{ file.id }}">Upload</button>
+        </form>
+     </td>
+    </tr>
+ {% endfor %}
+</table>
+{% endblock %}
