@@ -7,11 +7,12 @@ from django.views.generic import TemplateView
 app_name = 'student'
 from .views import (student_home_page, StudentCourseList,
                     student_course_detail_view, AnnouncementView,
-                    student_assignment_files_list)
+                    student_assignment_files_list, course_registration_view)
 
 urlpatterns = [
     url(r'^$', student_home_page, name='student_home_page'),
     url(r'^courses/$', StudentCourseList.as_view(), name='student_course_list'),
+    url(r'^courses/registration/$', course_registration_view, name='course_registration_view'),
     url(r'^courses/(?P<pk>.+)/announcements/view/$', AnnouncementView.as_view(), name='announcement_view'),
     url(r'^courses/(?P<pk>.+)/assignment/view/$', student_assignment_files_list, name='student_assignment_files_list'),
     url(r'^courses/(?P<pk>.+)/$', student_course_detail_view, name='student_course_detail_view'),

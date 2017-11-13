@@ -23,6 +23,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'ENiCa1uimBZNpDaRTCB9'
 DJANGO_ENV = 'local'
 
+USE_TZ = True
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if DJANGO_ENV == 'local':

@@ -124,3 +124,16 @@ def download(request, file_name):
     response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(file_name)
     return response
 
+@login_required
+def assignment_download(request, file_name):
+    # print('Hello')
+    file_path = settings.MEDIA_ROOT +'/assignment/'+ file_name
+    file_wrapper = FileWrapper(open(file_path,'rb'))
+    file_mimetype = mimetypes.guess_type(file_path)
+    response = HttpResponse(file_wrapper, content_type=file_mimetype )
+    response['X-Sendfile'] = file_path
+    response['Content-Length'] = os.stat(file_path).st_size
+    response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(file_name)
+    return response
+
+
