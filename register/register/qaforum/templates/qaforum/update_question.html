@@ -1,0 +1,5 @@
+{% extends 'qaforum/create_question.html' %}
+
+{% block action_url %}
+{% url 'qaforum:qaforum_update_question' view.kwargs.question_id %}
+{% endblock action_url %}

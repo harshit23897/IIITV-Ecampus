@@ -52,10 +52,50 @@ INSTALLED_APPS = [
     'registration',
     'register.faculty',
     'register.student',
+    'register.qa',
+    'register.qaforum',
+    'markdownx',
+    'hitcount',
+    'annoying',
+    'bootstrap3',
+    'taggit',
     'register.announcements',
     'register.course',
     'register.campus_admin',
 ]
+
+QA_SETTINGS = {
+    'qa_messages': True,
+    'qa_description_optional': False,
+    'count_hits': True,
+    'reputation': {
+        'CREATE_QUESTION': 0,
+        'CREATE_ANSWER': 0,
+        'CREATE_ANSWER_COMMENT': 0,
+        'CREATE_QUESTION_COMMENT': 0,
+        'ACCEPT_ANSWER': 0,
+        'UPVOTE_QUESTION': 0,
+        'UPVOTE_ANSWER': 0,
+        'DOWNVOTE_QUESTION': 0,
+        'DOWNVOTE_ANSWER': 0,
+    }
+}
+QAFORUM_SETTINGS = {
+    'qaforum_messages': True,
+    'qaforum_description_optional': False,
+    'count_hits': True,
+    'reputation': {
+        'CREATE_QUESTION': 0,
+        'CREATE_ANSWER': 0,
+        'CREATE_ANSWER_COMMENT': 0,
+        'CREATE_QUESTION_COMMENT': 0,
+        'ACCEPT_ANSWER': 0,
+        'UPVOTE_QUESTION': 0,
+        'UPVOTE_ANSWER': 0,
+        'DOWNVOTE_QUESTION': 0,
+        'DOWNVOTE_ANSWER': 0,
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -76,6 +116,8 @@ TEMPLATES = [
             os.path.join(BASE_DIR, 'templates'),
             os.path.join(BASE_DIR, 'register', 'templates'),
             os.path.join(BASE_DIR, 'register/faculty', 'templates'),
+            os.path.join(BASE_DIR, 'register/qa', 'templates'),
+            os.path.join(BASE_DIR, 'register/qaforum', 'templates'),
             os.path.join(BASE_DIR, 'register/student', 'templates'),
             os.path.join(BASE_DIR, 'register/course', 'templates'),
             os.path.join(BASE_DIR, 'register/campus_admin', 'templates/campus_admin'),

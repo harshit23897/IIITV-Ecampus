@@ -10,16 +10,16 @@
         <h><br/>Core Courses<br/></h>
         {% for course in courses_offered %}
                 {% if not course.elective %}
-                    <input type="checkbox" name="courses[]" value="{{ course.course_no }}">{{ course.course_no }}<br/>
+                    <input type="checkbox" name="courses[]" value="{{ course.courseNo }}">{{ course.courseNo }}<br/>
                 {% endif %}
         {% endfor %}
         <h><br/>Electives ({{ number_of_electives }} electives are in this semester.)<br/></h>
         {% for course in courses_offered %}
                 {% if  course.elective %}
-                    <input type="checkbox" name="courses[]" id="{{ course.course_no }}" value="{{ course.course_no }}" onclick="return checkCourseCount('{{ course.course_no }}', {{ number_of_electives }})">{{ course.course_no }} {{ course.course_name }}<br/>
+                    <input type="checkbox" name="courses[]" id="{{ course.courseNo }}" value="{{ course.courseNo }}" onclick="return checkCourseCount('{{ course.courseNo }}', {{ number_of_electives }})">{{ course.courseNo }} {{ course.course_name }}<br/>
                     <script type="text/javascript">
-                    function checkCourseCount(course_no, number_of_electives) {
-                        var temp1 = document.getElementById(course_no)
+                    function checkCourseCount(courseNo, number_of_electives) {
+                        var temp1 = document.getElementById(courseNo)
                         if(temp1) {
                             if (temp1.checked)
                             {NewCount = NewCount + 1}

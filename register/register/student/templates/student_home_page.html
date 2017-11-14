@@ -5,5 +5,6 @@
     <p><strong>Dear {{ user.username }} student, glad to have you here!</strong></p>
     <p>This is IIITV Ecampus</p>
     <p><a align="center" href="{% url 'student:student_course_list' %}">Courses</a></p>
+    <p><a align="center" href="{% url 'qaforum:qaforum_index' %}">Forum</a></p>
 {% endif %}
 {% endblock %}

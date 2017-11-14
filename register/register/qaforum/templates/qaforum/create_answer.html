@@ -1,0 +1,17 @@
+{% extends 'qaforum/base.html' %}
+
+{% block content %}
+
+  {% if message %}
+  <strong>Enter a valid Question!</strong>
+  {% endif %}
+
+  <form method="post" action="{% block action_url %}{% url 'qaforum:qaforum_create_answer' view.kwargs.question_id %}{% endblock action_url %}">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input class="btn pull-right btn-success" type="submit" value="Submit Answer" />
+  </form>
+
+</div>
+
+{% endblock content %}
