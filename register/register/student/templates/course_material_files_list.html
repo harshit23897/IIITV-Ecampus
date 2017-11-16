@@ -1,40 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<header>
-    <nav>
-    <div class="navbar navbar-inverse navbar-custom" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse"
-                                data-target=".navbar-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-        </div>
-        <div class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li> <a href="/student/" >Home </a></li>
-			<li> <a href="/" class="dropdown-toggle" data-toggle="dropdown">Fee Details</a> </li>
-			<li> <a href="/" class="dropdown-toggle" data-toggle="dropdown">Results </a> </li>
-              {% comment %}
-			<li> <a href="{% url 'view_classmates' %}">Classmates </a> </li>
-			<li> <a href="{% url 'view_profile' %}" >Profile </a> </li>
-      <li> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings <b class="caret"></b></a>
-              <ul class="dropdown-menu multi-level">
-                <li><a href="{% url 'edit_profile' %}">Edit Profile</a></li>
-                  {% endcomment %}
-                <li><a href="{% url 'auth_password_change' %}">Reset Password</a></li>
-                <li><a href="{% url 'auth_logout' %}">Logout</a></li>
-
-              </ul>
-            </li>
-          </ul>
-        </div>
-        <!--/.nav-collapse -->
-      </div>
-    </div>
-
-  </nav>
-</header>
-
 <style type="text/css">
 
 .wrap {
@@ -187,42 +153,35 @@ a.button:hover {
 	border-color: #696969;
 }
 </style>
-
-<div class="flex-container1">
+<body>
+    <div class="flex-container1">
         <div class="column">
-					<div class="wrap"><main1>
-					<aside >
-                        <div class="wraper">
-                            {% for course in student_courses %}
-                                <a href="{% url 'student:student_course_detail_view' course_no=course  %}" class="button button--ghost button--ghost--green">{{ course }}</a>
-                            {% endfor %}
-                                <a href="/student/forum" class="button button--ghost button--ghost--green">Forum</a>
-                        </div>
-
-					</aside>
-				</main1>
-			</div>
-		</div>
-        <div class="column bg-alt">
 		<div class="wrap">
-            <main1>
-                <article>
-                    <h1 style="text-align:center;text-color:#ff0000">Announcements</h1>
-                    {% for announcement in announcement_in_courses %}
-                        <p>{{ forloop.counter }}. {{ announcement.announcement }} - {{ announcement.announcementUser }}, {{ announcement.uploaded_at }}</p>
-                    {% endfor %}
-                </article>
-            </main1>
-        </div>
-		</div>
+		<article>
+		<table>
+  <tr>
+    <th>Filename</th>
+    <th>Description</th>
+    <th>Download</th>
+
+  </tr>
+  <tr>
+    <td>Peter</td>
+    <td>Griffin</td>
+	<td><div id="button-wrap">
+        <div id="button-wrap-inner">
+          <a class="btn" href="">Download</a>
+        </div><!-- end button-wrap-inner -->
+      </div></td>
+  </tr>
+
+</table>
+</article>
+</div>
 </div>
 
-{% comment %}
-{% if user.is_authenticated %}
-    <p><strong>Dear {{ user.username }} student, glad to have you here!</strong></p>
-    <p>This is IIITV Ecampus</p>
-    <p><a align="center" href="{% url 'student:student_course_list' %}">Courses</a></p>
-    <p><a href="{% url 'qaforum:qaforum_index' %}">Forum</a></p>
-{% endif %}
-{% endcomment %}
+
+
+    </div>
+</body>
 {% endblock %}

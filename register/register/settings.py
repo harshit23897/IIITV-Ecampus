@@ -203,8 +203,8 @@ EMAIL_HOST_PASSWORD = 'thisisnewpassword'
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
-STATIC_URL = '/staticfiles/'
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+STATIC_URL = '/static/'
 
 # This is the URL where media files will go
 MEDIA_URL = '/media/'
@@ -212,7 +212,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Extra places for collectstatic to find staticfiles files.
 STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT, '..', 'static'),
+    os.path.join(PROJECT_ROOT, '..', 'staticfiles'),
 )
 
 # LOGGING = {

@@ -37,9 +37,12 @@ def student_home_page(request):
         student_.save()
         return redirect('student:course_registration_view')
     else:
+        student_courses = student.objects.filter(user_student=request.user)[0].course_no.all()
+        announcement_in_courses = Announcement.objects.filter(announcementCourse__in=student_courses)
         return render(request,
                       'student_home_page.html',
-                      {})
+                      {'student_courses': student_courses,
+                       'announcement_in_courses': announcement_in_courses})
 
 class StudentCourseList(LoginRequiredMixin, ListView):
     login_url = '/accounts/login/'
@@ -91,7 +94,7 @@ def student_assignment_files_list(request, course_no):
             raise forms.ValidationError(_('The time of assignment submission has passed. Better luck next time.'))
         return redirect('student:student_home_page')
     else:
-        material = AssignmentMaterial.objects.filter(courseNo=course_no)
+        material = AssignmentMaterial.objects.filter(course_no=course_no)
         form = AssignmentSubmissionForm()
     return render(request, 'student_assignment_files_list.html', {
         'form': form,
@@ -107,8 +110,8 @@ def course_registration_view(request):
         current_student = student.objects.filter(user_student=request.user)
         for selected_course in request.POST.getlist('courses[]'):
             temp = course.objects.filter(courseNo=selected_course)
-            current_student[0].courseNo.add(temp[0])
-        print(current_student[0].courseNo)
+            current_student[0].course_no.add(temp[0])
+        print(current_student[0].course_no)
         return redirect('/')
     else:
         current_student = student.objects.get(user_student=request.user)

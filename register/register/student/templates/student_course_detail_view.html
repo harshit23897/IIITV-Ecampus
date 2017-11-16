@@ -1,7 +1,128 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block content %}
+{% load static %}
+<header>
+    <nav>
+    <div class="navbar navbar-inverse navbar-custom" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse"
+                                data-target=".navbar-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li> <a href="/student/" >Home </a></li>
+			<li> <a href="/" class="dropdown-toggle" data-toggle="dropdown">Fee Details</a> </li>
+			<li> <a href="/" class="dropdown-toggle" data-toggle="dropdown">Results </a> </li>
+              {% comment %}
+			<li> <a href="{% url 'view_classmates' %}">Classmates </a> </li>
+			<li> <a href="{% url 'view_profile' %}" >Profile </a> </li>
+      <li> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings <b class="caret"></b></a>
+              <ul class="dropdown-menu multi-level">
+                <li><a href="{% url 'edit_profile' %}">Edit Profile</a></li>
+                  {% endcomment %}
+                <li><a href="{% url 'auth_password_change' %}">Reset Password</a></li>
+                <li><a href="{% url 'auth_logout' %}">Logout</a></li>
+
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <!--/.nav-collapse -->
+      </div>
+    </div>
+
+  </nav>
+</header>
+<link href="{% static 'css/qaa.css' %}" rel="stylesheet"/>
+<style>
+
+
+
+.sidenav {
+    height: 60%;
+    width: 0;
+    position: absolute;
+    z-index: 1;
+    top: 168px;
+    left: 0;
+    background-color: #0f6c6b;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #a3a948;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+#main {
+    transition: margin-left .5s;
+    padding: 16px;
+}
+
+
+</style>
+
+<body>
+  <div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="{% url 'course:course_material_view' course_no=course_no %}">Course Material</a>
+    <a href="{% url 'student:student_assignment_files_list' course_no=course_no %}">Assignments</a>
+    <a href="{% url 'qa:qa_index' course_no=course_no %}">{{ course_no }} Discusion Forum</a>
+  </div>
+
+  <div id="main" >
+    <div class="mainblock">
+
+
+      <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;
+
+        {% block bar %}
+          {{course.courseNo.courseName}}
+        {% endblock bar %}
+      </span>
+
+      {% block matter %}
+      {% endblock matter%}
+      </div>
+  </div>
+</body>
+
+
+<script>
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft= "0";
+}
+</script>
+    {% comment %}
     <p><a width="30%" align="center" href="{% url 'course:course_material_view' course_no=course_no %}">View Course Material</a></p>
     <p><a width="30%" align="center" href="{% url 'student:student_assignment_files_list' course_no=course_no %}">View/Submit Assignment Material</a></p>
     <p><a width="30%" align="center" href="{% url 'student:announcement_view' course_no=course_no %}">Announcements</a></p>
+    <p><a width="30%" align="center" href="{% url 'qa:qa_index' course_no=course_no %}">{{ course_no }} Discussion Forum</a></p>
+    {% endcomment %}
 {% endblock %}

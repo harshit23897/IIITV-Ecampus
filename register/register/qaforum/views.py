@@ -203,7 +203,7 @@ class QaQuestionsByTagView(ListView):
         context['totalcount'] = QaQuestion.objects.count
         context['anscount'] = QaAnswer.objects.count
         context['noans'] = QaQuestion.objects.order_by('-pub_date').filter(
-            tags__name__contains=self.kwargs['tag'], answer__isnull=True)[:10]
+            tags__name__contains=self.kwargs['tag'], qaanswer__isnull=True)[:10]
 
 
         context['totalnoans'] = len(context['noans'])

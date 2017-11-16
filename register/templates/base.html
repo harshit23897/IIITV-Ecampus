@@ -1,19 +1,249 @@
-<!DOCTYPE html>
-<html>
-<head>
-    {% load static %}
-	<title></title>
-	<link rel="stylesheet" type="text/css" href="{% static 'css/IIITVE.css' %}">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
 
-</head>
+<!DOCTYPE html>
+<style>
+p{
+  font-family: "Lucida Sans Unicode","Lucida Grande",sans-serif;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.css_blink {
+	-webkit-animation-name: blinker;
+	-webkit-animation-duration: 1s;
+	-webkit-animation-timing-function: linear;
+	-webkit-animation-iteration-count: infinite;
+
+	-moz-animation-name: blinker;
+	-moz-animation-duration: 1s;
+	-moz-animation-timing-function: linear;
+	-moz-animation-iteration-count: infinite;
+
+	animation-name: blinker;
+	animation-duration: 1s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+}
+
+@-moz-keyframes blinker {
+	50% { opacity: 0.0; }
+	100% { opacity: 1.0; }
+}
+
+@-webkit-keyframes blinker {
+	50% { opacity: 0.0; }
+	100% { opacity: 1.0; }
+}
+
+@keyframes blinker {
+	50% { opacity: 0.0; }
+	100% { opacity: 1.0; }
+}
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.spacer {
+    flex: 1;
+}
+</style>
+
+
+
+<style>
+.read-more-state {
+  display: none;
+}
+
+.read-more-target {
+  opacity: 0;
+  max-height: 0;
+  font-size: 0;
+  transition: .25s ease;
+}
+
+.read-more-state:checked ~ .read-more-wrap .read-more-target {
+  opacity: 1;
+  font-size: inherit;
+  max-height: 999em;
+}
+
+.read-more-state ~ .read-more-trigger:before {
+  content: 'Show more';
+}
+
+.read-more-state:checked ~ .read-more-trigger:before {
+  content: 'Show less';
+}
+
+.read-more-trigger {
+  cursor: pointer;
+  display: inline-block;
+  padding: 0 .5em;
+  color: #666;
+  font-size: .9em;
+  line-height: 2;
+  border: 1px solid #ddd;
+  border-radius: .25em;
+}
+</style>
+
+
+<style>
+
+
+.tabs-left > .nav-tabs {
+  border-bottom: 0;
+
+}
+
+.tab-content > .tab-pane,
+.pill-content > .pill-pane {
+  display: none;
+}
+
+.tab-content > .active,
+.pill-content > .active {
+  display: block;
+}
+
+.tabs-left > .nav-tabs > li {
+  float: none;
+}
+
+.tabs-left > .nav-tabs > li > a {
+  min-width: 74px;
+  margin-right: 0;
+  margin-bottom: 3px;
+}
+
+.tabs-left > .nav-tabs {
+  float: left;
+  margin-right: 19px;
+  border-right: 1px solid #ddd;
+}
+
+.tabs-left > .nav-tabs > li > a {
+  margin-right: -1px;
+  -webkit-border-radius: 4px 0 0 4px;
+     -moz-border-radius: 4px 0 0 4px;
+          border-radius: 4px 0 0 4px;
+}
+
+.tabs-left > .nav-tabs > li > a:hover,
+.tabs-left > .nav-tabs > li > a:focus {
+  border-color: #eeeeee #dddddd #eeeeee #eeeeee;
+}
+
+.tabs-left > .nav-tabs .active > a,
+.tabs-left > .nav-tabs .active > a:hover,
+.tabs-left > .nav-tabs .active > a:focus {
+  border-color: #ddd transparent #ddd #ddd;
+  *border-right-color: #ffffff;
+}
+</style>
+<html lang="en">
 <body>
-	<div class="Main">
-	 <h1 style="text-align: left; margin-left: 5%;"><img src="http://iiitvadodara.ac.in/img/IIITV_Logo_1x1_small.png" style="width: 100px">
-	 Indian Institute of Information Technology, Vadodara
-	</h1>
-		{% block content %}
-		{% endblock %}
-</div>
+<head>
+    <meta charset="UTF-8">
+    <title>IIITV Ecampus</title>
+    	<link rel="icon" type="image/png" href="http://iiitvadodara.ac.in/img/IIITV_Logo_1x1_small.png">
+    <link href='https://fonts.googleapis.com/css?family=Oxygen:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="http://iiitvadodara.ac.in/css/style.css">
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
+</head>
+
+<script>
+function blinker() {
+  $('.jquery_blink').fadeOut(500);
+  $('<div class="jqu"></div>ery_blink').fadeIn(500);
+}
+
+setInterval(blinker, 1000);
+</script>
+
+<body id="home">
+<!-- Start Your Body Code From here -->
+<div class="wrapper">
+    <!-- header starts here -->
+    <header id="header" class="">
+  <!-- header -->
+  <div class="header-wrapper">
+    <div class="header-container">
+      <div>
+        <div class="logo-name">
+          <div class="logo"><img src="http://iiitvadodara.ac.in/img/IIITV_Logo_1x1_small.png" alt="logo"></a></div>
+          <div class="name">
+            <h5>Indian Institute of Information Technology</h5>
+            <h5 class="primary-color">Vadodara - Ecampus</h5>
+            </div>
+        </div>
+      </div>
+      <div class="header-links"> <a href="#" data-toggle="popover" title="Address"
+                       data-content="c/o Block No.9, Government Engineering College, Sector-28, Gandhinagar, Gujarat - 382028"
+                       data-placement="bottom"><i class="fa fa-map-marker fa-lg" aria-hidden="true"></i></a> <a href="#" data-toggle="popover" title="Phone No." data-content="+91-79-29750281"
+                       data-placement="bottom"><i class="fa fa-phone fa-lg" aria-hidden="true"></i></a> <a href="#" data-toggle="popover" title="Email" data-content="administration@iiitvadodara.ac.in"
+                       data-placement="bottom"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a> </div>
+    </div>
+  </div>
+</header>
+    <!-- /header -->
+
+{% block content %}
+
+
+{% endblock %}
+    <div class="spacer"></div>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-wrapper" id="footer">
+            <span class="logo"><img src="http://iiitvadodara.ac.in/img/IIITV_Logo_1x1_small.png" alt=""></span>
+            <div class="rows">
+                <!--<div class="col-sm-4 address">-->
+				<p>
+                    <strong>Address : </strong>c/o Block No.9, Government Engineering College,
+                    Sector-28, Gandhinagar, Gujarat - 382028
+				</p>
+            </div>
+        </div>
+        <div class="push"></div>
+    </footer>
+    <div class="footer"></div>
+
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script src="https://use.fontawesome.com/434d359724.js"></script>
+<script src="http://iiitvadodara.ac.in/js/main.js"></script>
+<script>
+$(document).on('click', function (e) {
+    var
+        $popover,
+        $target = $(e.target);
+
+    //do nothing if there was a click on popover content
+    if ($target.hasClass('popover') || $target.closest('.popover').length) {
+        return;
+    }
+
+    $('[data-toggle="popover"]').each(function () {
+        $popover = $(this);
+
+        if (!$popover.is(e.target) &&
+            $popover.has(e.target).length === 0 &&
+            $('.popover').has(e.target).length === 0)
+        {
+            $popover.popover('hide');
+        } else {
+            //fixes issue described above
+            $popover.popover('toggle');
+        }
+    });
+})
+</script><script type="text/javascript" src="js/jquery.paginate.min.js "></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
 </body>
+</body>
+
 </html>

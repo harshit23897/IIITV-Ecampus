@@ -109,6 +109,7 @@ def assignment_files_list(request, course_no):
     material = AssignmentMaterial.objects.filter(course_no=course_no)
     return render(request, 'assignment_material_view.html',
                               {'assignment_material': material,
+                               'course_no': course_no,
                                'path':settings.MEDIA_ROOT},
                               )
 

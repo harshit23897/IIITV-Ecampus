@@ -1,14 +1,73 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load static %}
 
 {% block content %}
-<form method="post" action=".">
-  {% csrf_token %} 
-  {{ form.as_p }}
-
-  <input class="pure-button pure-button-primary" type="submit" value="{% trans 'Log in' %}" />
-  <input type="hidden" name="next" value="{% url 'index' %}" />
-</form>
-
-<p>{% trans "Forgot password" %}? <a href="{% url 'auth_password_reset' %}">{% trans "Reset it" %}</a>!</p>
+<head>
+    <style>
+       html {
+          height: 100%;
+        }
+        body {
+          min-height: 100%;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/LoginFac.css' %}">
+</head>
+<body>
+  <div class="container" style="margin-top:80px;">
+      <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-login">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-xs-6"  style="margin-left: 25%;">
+                <a href="" class="active"  id="login-form-link">Login</a>
+              </div>
+            </div>
+            <hr>
+          </div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-lg-12">
+                <form id="login-form" action="" method="post" role="form" style="display: block;">
+                    {% csrf_token %}
+                  <div class="form-group" style="margin-top:20px">
+                      <input autocomplete="off" type="text" name="username" id="username" tabindex="1" class="form-control"  placeholder="Username" value="">{{ username }}</input>
+                  </div>
+                  <div class="form-group" style="margin-top:20px">
+                      <input autocomplete="off" type="password" name="password" id="password" tabindex="2" class="form-control"  placeholder="Password">{{ password }}</input>
+                  </div>
+                    <input type="hidden" name="next" value="{% url 'index' %}" />
+                    {% comment %}
+                  <div class="form-group text-center">
+                    <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
+                    <label for="remember"> Remember Me</label>
+                  </div>
+                    {% endcomment %}
+                  <div class="form-group" style="margin-top:20px">
+                    <div class="row">
+                      <div class="col-sm-6 col-sm-offset-3">
+                        <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="text-center">
+                          <a href="{% url 'auth_password_reset' %}" tabindex="5" class="forgot-password">Forgot Password?</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
 {% endblock %}
