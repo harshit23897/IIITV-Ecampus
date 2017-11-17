@@ -1,6 +1,3 @@
-body {
-    height: 100%;
-}
 .panel-login {
 	border-color: #ccc;
 	-webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
@@ -96,4 +93,42 @@ body {
 	color: #fff;
 	background-color: #1CA347;
 	border-color: #1CA347;
+}
+html {
+      height: 100%;
+}
+
+body {
+  min-height: 100%;
+}
+
+.wrap {
+min-height: 100%;
+height: auto !important; /*Cause footer to stick to bottom in IE 6*/
+display: -webkit-box;
+display: -ms-flexbox;
+display: box;
+display: flex;
+}
+
+.flex-container1{
+    min-height: 100%;
+    height: auto !important; /*Cause footer to stick to bottom in IE 6*/
+    margin: 0 auto -100px; /*Allow for footer height*/
+    vertical-align:bottom;
+
+	width: 100%;
+	margin: 0 auto;
+	display: -webkit-flex; /* Safari */
+	display: flex; /* Standard syntax */
+}
+.flex-container1 .column{
+	padding: 10px;
+	background: #006E6D;
+	-webkit-flex: 1; /* Safari */
+	-ms-flex: 1; /* IE 10 */
+	flex: 1; /* Standard syntax #b4bac0;*/
+}
+.flex-container1 .column.bg-alt{
+	background: #006E6D;
 }

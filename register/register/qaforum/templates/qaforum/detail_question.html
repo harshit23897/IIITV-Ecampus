@@ -1,7 +1,7 @@
 {% extends 'qaforum/base.html' %}
 {% load staticfiles %}
 
-{% block content %}
+{% block matter %}
 
 {% if question.closed %}
   <div class="closed"></div>
@@ -100,7 +100,7 @@
 {% endif %}
 
 
-{% endblock content %}
+{% endblock matter %}
 {% block extra_js %}
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script>

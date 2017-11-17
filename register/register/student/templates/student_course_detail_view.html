@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 
-{% block content %}
 {% load static %}
+{% block content %}
 <header>
+    <link rel="shortcut icon" href="http://cdn.sstatic.net/stackoverflow/img/favicon.ico"/>
+    <link rel="apple-touch-icon" href="http://cdn.sstatic.net/stackoverflow/img/apple-touch-icon.png"/>
     <nav>
     <div class="navbar navbar-inverse navbar-custom" role="navigation">
       <div class="container">
@@ -37,17 +39,33 @@
 </header>
 <link href="{% static 'css/qaa.css' %}" rel="stylesheet"/>
 <style>
-
-
-
+.wraper {
+  position: absolute;
+  top: 30%;
+  left: 48%;
+  margin: 0 auto -100px; /*Allow for footer height*/
+  height: auto !important; /*Cause footer to stick to bottom in IE 6*/
+  margin-left: -25% ;
+  text-align: center;
+}
+.wrap {
+  min-height: 100px;
+  height: auto;
+  height: ;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+}
 .sidenav {
-    height: 60%;
+    min-height: 92%;
+    height: auto;
     width: 0;
     position: absolute;
     z-index: 1;
     top: 168px;
     left: 0;
-    background-color: #0f6c6b;
+    background-color: #00000;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
@@ -78,33 +96,38 @@
     transition: margin-left .5s;
     padding: 16px;
 }
-
-
 </style>
 
-<body>
-  <div id="mySidenav" class="sidenav">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a href="{% url 'course:course_material_view' course_no=course_no %}">Course Material</a>
-    <a href="{% url 'student:student_assignment_files_list' course_no=course_no %}">Assignments</a>
-    <a href="{% url 'qa:qa_index' course_no=course_no %}">{{ course_no }} Discusion Forum</a>
-  </div>
+<body class="wrap">
+        <main1>
+            <aside >
+                  <div id="mySidenav" class="sidenav">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                    <a href="{% url 'course:course_material_view' course_no=course_no %}">Course Material</a>
+                    <a href="{% url 'student:student_assignment_files_list' course_no=course_no %}">Assignments</a>
+                    <a href="{% url 'qa:qa_index' course_no=course_no %}">Discusion Forum</a>
+                  </div>
 
-  <div id="main" >
-    <div class="mainblock">
+                  <div id="main" >
+                    <div class="mainblock">
 
 
-      <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;
+                      <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;
 
-        {% block bar %}
-          {{course.courseNo.courseName}}
-        {% endblock bar %}
-      </span>
+                        {% block bar %}
+                          {{course.courseNo.courseName}}
+                        {% endblock bar %}
+                      </span>
 
-      {% block matter %}
-      {% endblock matter%}
-      </div>
-  </div>
+                      {% block student_content %}
+                      {% endblock student_content %}
+
+                    </div>
+                  </div>
+                </div>
+            </aside>
+        </main1>
+
 </body>
 
 
@@ -119,10 +142,4 @@ function closeNav() {
     document.getElementById("main").style.marginLeft= "0";
 }
 </script>
-    {% comment %}
-    <p><a width="30%" align="center" href="{% url 'course:course_material_view' course_no=course_no %}">View Course Material</a></p>
-    <p><a width="30%" align="center" href="{% url 'student:student_assignment_files_list' course_no=course_no %}">View/Submit Assignment Material</a></p>
-    <p><a width="30%" align="center" href="{% url 'student:announcement_view' course_no=course_no %}">Announcements</a></p>
-    <p><a width="30%" align="center" href="{% url 'qa:qa_index' course_no=course_no %}">{{ course_no }} Discussion Forum</a></p>
-    {% endcomment %}
 {% endblock %}

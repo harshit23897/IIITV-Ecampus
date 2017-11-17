@@ -41,8 +41,12 @@ p{
 body {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+
 }
+#body {
+    height: 100%;
+    width: 100%;
+}​
 
 .spacer {
     flex: 1;
@@ -142,9 +146,27 @@ body {
   border-color: #ddd transparent #ddd #ddd;
   *border-right-color: #ffffff;
 }
+#container {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+#body {
+    background: #006E6D;
+}​
+#header1, #footer1 {
+    height: 100px;
+    width: 100%;
+}
+.wrapper {
+  width: 100%
+  height: 50%
+  text-align: center;
+}
 </style>
 <html lang="en">
-<body>
+<div id="container">
+    <body>
 <head>
     <meta charset="UTF-8">
     <title>IIITV Ecampus</title>
@@ -168,34 +190,35 @@ setInterval(blinker, 1000);
 <!-- Start Your Body Code From here -->
 <div class="wrapper">
     <!-- header starts here -->
-    <header id="header" class="">
-  <!-- header -->
-  <div class="header-wrapper">
-    <div class="header-container">
-      <div>
-        <div class="logo-name">
-          <div class="logo"><img src="http://iiitvadodara.ac.in/img/IIITV_Logo_1x1_small.png" alt="logo"></a></div>
-          <div class="name">
-            <h5>Indian Institute of Information Technology</h5>
-            <h5 class="primary-color">Vadodara - Ecampus</h5>
+    <header id="header">
+      <!-- header -->
+      <div class="header-wrapper">
+        <div class="header-container">
+          <div>
+            <div class="logo-name">
+              <div class="logo"><img src="http://iiitvadodara.ac.in/img/IIITV_Logo_1x1_small.png" alt="logo"></a></div>
+              <div class="name">
+                <h5>Indian Institute of Information Technology</h5>
+                <h5 class="primary-color">Vadodara - Ecampus</h5>
+                </div>
             </div>
+          </div>
+          <div class="header-links"> <a href="#" data-toggle="popover" title="Address"
+                           data-content="c/o Block No.9, Government Engineering College, Sector-28, Gandhinagar, Gujarat - 382028"
+                           data-placement="bottom"><i class="fa fa-map-marker fa-lg" aria-hidden="true"></i></a> <a href="#" data-toggle="popover" title="Phone No." data-content="+91-79-29750281"
+                           data-placement="bottom"><i class="fa fa-phone fa-lg" aria-hidden="true"></i></a> <a href="#" data-toggle="popover" title="Email" data-content="administration@iiitvadodara.ac.in"
+                           data-placement="bottom"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a> </div>
         </div>
       </div>
-      <div class="header-links"> <a href="#" data-toggle="popover" title="Address"
-                       data-content="c/o Block No.9, Government Engineering College, Sector-28, Gandhinagar, Gujarat - 382028"
-                       data-placement="bottom"><i class="fa fa-map-marker fa-lg" aria-hidden="true"></i></a> <a href="#" data-toggle="popover" title="Phone No." data-content="+91-79-29750281"
-                       data-placement="bottom"><i class="fa fa-phone fa-lg" aria-hidden="true"></i></a> <a href="#" data-toggle="popover" title="Email" data-content="administration@iiitvadodara.ac.in"
-                       data-placement="bottom"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a> </div>
-    </div>
-  </div>
-</header>
+    </header>
     <!-- /header -->
+<div class="wrapper">
+    {% block content %}
 
-{% block content %}
 
-
-{% endblock %}
-    <div class="spacer"></div>
+    {% endblock %}
+</div>
+    <div class="spacer footer1"></div>
     <!-- Footer -->
     <footer>
         <div class="footer-wrapper" id="footer">
@@ -245,5 +268,5 @@ $(document).on('click', function (e) {
 <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
 </body>
 </body>
-
+</div>
 </html>

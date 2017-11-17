@@ -94,6 +94,17 @@ main1 {
   display: box;
   display: flex;
 }
+main1 {
+  -webkit-box-flex: 1;
+  -o-box-flex: 1;
+  box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+}
 @media (max-width: 800px) {
   main1 {
     -webkit-box-orient: vertical;
@@ -258,24 +269,6 @@ function blinker() {
   $('.jquery_blink').fadeIn(500);
 }
 setInterval(blinker, 1000);
-.flex-container1{
-	width: 100%;
-	min-height: 100px;
-	height: auto !important; /*Cause footer to stick to bottom in IE 6*/
-    margin: 0 auto -100px; /*Allow for footer height*/
-	display: -webkit-flex; /* Safari */
-	display: flex; /* Standard syntax */
-}
-.flex-container1 .column{
-	padding: 10px;
-	background: #f7f7f7;
-	-webkit-flex: 1; /* Safari */
-	-ms-flex: 1; /* IE 10 */
-	flex: 1; /* Standard syntax */
-}
-.flex-container1 .column.bg-alt{
-	background: #b4bac0;
-}
 </style>
 <script>
 $(document).on('click', function (e) {
@@ -304,6 +297,25 @@ $(document).on('click', function (e) {
 })
 </script>
 
+<style type="text/css">
+.flex-container1{
+	width: 100%;
+	height: 100%;
+	margin: 0 auto;
+	display: -webkit-flex; /* Safari */
+	display: flex; /* Standard syntax */
+}
+.flex-container1 .column{
+	padding: 10px;
+	background: #f7f7f7;
+	-webkit-flex: 1; /* Safari */
+	-ms-flex: 1; /* IE 10 */
+	flex: 1; /* Standard syntax */
+}
+.flex-container1 .column.bg-alt{
+	background: #b4bac0;
+}
+</style>
 <body>
     <div class="flex-container1">
         <div class="column">
@@ -316,18 +328,18 @@ $(document).on('click', function (e) {
     <th>Download</th>
 
   </tr>
-      {% for file in course_material %}
-    <tr>
-     <td >{{ file.filename }}</td>
-     <td >{{ file.description }}</td>
-     <td><div id="button-wrap">
-        <div id="button-wrap-inner">
-          <a class="btn" href="/download/course-material/{{file.filename}}" style="text-decoration:None">Download</a>
-        </div><!-- end button-wrap-inner -->
-      </div>
-     </td>
-    </tr>
- {% endfor %}
+      {% for material in course_material %}
+       <tr>
+            <td>{{ material.filename }}</td>
+            <td>{{ material.description }}</td>
+            <td><div id="button-wrap">
+                <div id="button-wrap-inner">
+                  <a class="btn" href="">Download</a>
+                </div><!-- end button-wrap-inner -->
+              </div></td>
+       </tr>
+      {% endfor %}
+
 </table>
 </article>
 </div>

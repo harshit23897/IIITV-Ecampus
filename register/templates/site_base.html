@@ -1,23 +1,42 @@
 {% extends "base.html" %}
 
 {% block content %}
-<body>
-	<div class="container">
+<style>
+	.wrap {
+	  height: 100%;
+	  display: -webkit-box;
+	  display: -ms-flexbox;
+	  display: box;
+	  display: flex;
+	}
+    #background {
+        background:;
+    }
+}
+</style>
+<body class="wrap">
+    <div id="background">
+        <main1>
+            <aside >
+                <div class="container">
 
-		<h1 align="center" style="border-bottom: 1px solid; dashed;width: 18%;margin-left: 40%;padding-bottom: 10px; "> E-Campus</h1>
-		<br>
+                    <h1 align="center" style="border-bottom: 1px solid; dashed;width: 18%;margin-left: 40%;padding-bottom: 10px; "> E-Campus</h1>
+                    <br>
 
 
-		<h3 align="center">Welcome to the IIITV E-Campus</h3>
+                    <h3 align="center">Welcome to the IIITV E-Campus</h3>
 
-		<br>
-		<br>
+                    <br>
+                    <br>
 
-		<p style="center"> <a class="btn btn-lg btn-primary" href="{% url 'auth_login' %}" style="background-color: #E5BFBF; border: 1px solid; color: black;">Student</a>
-            <a class="btn btn-lg btn-primary" href="{% url 'auth_login' %}" style="background-color: #E5BFBF; border: 1px solid; color: black;">Faculty</a> </p>
-		<br>
-		<br>
-        <p style="margin-bottom: 10px"></p>
-	</div>
+                    <p style="center"> <a class="btn btn-lg btn-primary" href="{% url 'auth_login' %}" style="background-color: #E5BFBF; border: 1px solid; color: black;">Student</a>
+                        <a class="btn btn-lg btn-primary" href="{% url 'auth_login' %}" style="background-color: #E5BFBF; border: 1px solid; color: black;">Faculty</a> </p>
+                    <br>
+                    <br>
+                    <p style="margin-bottom: 10px"></p>
+                </div>
+            </aside>
+        </main1>
+    </div>
 </body>
 {% endblock %}

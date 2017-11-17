@@ -1,9 +1,10 @@
 {% extends "qaforum/base.html" %}
 {% load staticfiles %}
 
-{% block content %}
+{% block matter %}
 
-<div class="col-md-8">
+<div class="col-md-12">
+    <div class="col-md-12">
 
     <ul class="nav nav-tabs nav-justified">
         <li role="presentation" {% if active_tab == 'latest' %}class="active"{% endif %}><a href="#latest" data-toggle="tab"><span class="glyphicon glyphicon-th-list"></span> Latest</a></li>
@@ -95,45 +96,18 @@
 
 
   </div>
-</div>
-
-<div class="col-md-4">
-
-  <div class="panel panel-default">
-    <div class="panel-body">
-      <h4>Total Questions: {{ totalcount }}</h4>
-      <h4>Total Answers: {{ anscount }}</h4>
-    </div>
-  </div>
-
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span> Recent Tags</h3>
-    </div>
-    <div class="panel-body">
-      {% for tag in tags %}
-          <a href="{% url 'qaforum:qaforum_tag' tag.slug %}"><tag>{{ tag.slug }}</tag></a>
-      {% endfor %}
-    </div>
-  </div>
-
-  {% if noans.count %}
-  <div class="panel panel-warning">
-    <div class="panel-heading">
-      <h3 class="panel-title">Unanswered Questions</h3>
-    </div>
-    <div class="panel-body">
-    <ul>
-      {% for question in noans %}
-      <li><a href="{% url 'qaforum:qaforum_detail' pk=question.id %}">{{ question.title }}</a></li>
-      {% endfor %}
-    </ul>
-    </div>
-  </div>
-  {% endif %}
-
-
 
 </div>
+</div>
 
-{% endblock content %}
+<style >
+.cont{
+  padding-bottom: 5%;
+}
+p{
+  font-family: "Lucida Sans Unicode","Lucida Grande",sans-serif;
+  font-size: 1.2rem;
+  text-align: left;
+}
+</style>
+{% endblock matter %}

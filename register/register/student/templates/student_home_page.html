@@ -38,7 +38,7 @@
 <style type="text/css">
 
 .wrap {
-  height: 430px;
+  height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: box;
@@ -108,17 +108,17 @@ h1 {
 }
 .flex-container1 .column{
 	padding: 10px;
-	background: #000000;
+	background: #FFFFFF;
 	-webkit-flex: 1; /* Safari */
 	-ms-flex: 1; /* IE 10 */
 	flex: 1; /* Standard syntax #b4bac0;*/
 }
 .flex-container1 .column.bg-alt{
-	background: #000000;
+	background: #FFFFFF;
 }
 .wraper {
   position: absolute;
-  top: 40%;
+  top: 30%;
   left: 48%;
   margin: 0 auto -100px; /*Allow for footer height*/
   height: auto !important; /*Cause footer to stick to bottom in IE 6*/
@@ -190,18 +190,18 @@ a.button:hover {
 
 <div class="flex-container1">
         <div class="column">
-					<div class="wrap"><main1>
-					<aside >
-                        <div class="wraper">
-                            {% for course in student_courses %}
-                                <a href="{% url 'student:student_course_detail_view' course_no=course  %}" class="button button--ghost button--ghost--green">{{ course }}</a>
-                            {% endfor %}
-                                <a href="/student/forum" class="button button--ghost button--ghost--green">Forum</a>
-                        </div>
-
-					</aside>
-				</main1>
-			</div>
+                <div class="wrap">
+                    <main1>
+                        <aside >
+                            <div class="wraper">
+                                {% for course in student_courses %}
+                                    <a href="{% url 'student:student_course_detail_view' course_no=course  %}" class="button button--ghost button--ghost--green">{{ course }}</a>
+                                {% endfor %}
+                                    <a href="/student/forum" class="button button--ghost button--ghost--green">Forum</a>
+                            </div>
+                        </aside>
+                    </main1>
+                </div>
 		</div>
         <div class="column bg-alt">
 		<div class="wrap">

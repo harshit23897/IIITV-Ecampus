@@ -5,7 +5,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from register.course.models import AssignmentMaterial
-from register.course.models import course
+from register.course.models import course, OfferedIn
 
 class student(models.Model):
     course_no = models.ManyToManyField(course)
@@ -30,6 +30,23 @@ class AssignmentSubmission(models.Model):
 
     def __str__(self):
         return self.file.name
+
+class Result(models.Model):
+    studentId = models.ForeignKey(student, related_name='student_id+')
+    semesterNo = models.ForeignKey(OfferedIn, null=True, related_name='semester+')
+    SPI = models.FloatField(default='',blank=True,null=True)
+
+    class Meta:
+        unique_together = (('semester','studentId'),)
+
+class FeeReceipt(models.Model):
+    studentId = models.ForeignKey(student,related_name='%(class)s_student_id',null=False,default="0")
+    semesterNo = models.ForeignKey(OfferedIn, related_name='semester+', null=True)
+    receiptId = models.CharField(max_length=30,null=False,blank=True,default="0")
+    status = models.CharField(max_length=50,null=False,blank=True,default='Not Paid')
+
+    class Meta:
+        unique_together = (('semester','student_id'),)
 
 class UserProfileManager(models.Manager):
     def get_queryset(self):
