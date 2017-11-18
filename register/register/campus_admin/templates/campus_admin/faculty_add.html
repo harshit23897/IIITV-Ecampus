@@ -1,15 +1,17 @@
 {% extends 'base.html' %}
 
-{% block content%}
+{% block content %}
     <style>
             #outerPanel{
-                margin-top: 30px;
+                margin-top: 20px;
             }
             .styleForm{
                 text-align: center;
                 overflow: auto;
             }
-
+            #submitButton{
+                margin-bottom: 20px;
+            }
 
     </style>
 
@@ -19,11 +21,15 @@
                  <form method="POST" class="post-form" id="form">{% csrf_token %}
                         {% for field, error in form.errors.items %}
                              {% if field != '__all__' %}{% endif %}
-                                    {{ error | striptags }}
+                                    {{ error | striptags }} <br>
                         {% endfor %}
 
-                        <p> <strong> ReceiptId: </strong> {{ form.receiptId }}</p>
-                        <p> <strong> Status: </strong> {{ form.status}} </p>
+                     <p> <strong> First Name </strong> {{ form.first_name }}</p>
+                     <p> <strong> Last Name </strong> {{ form.last_name }}</p>
+                     <p> <strong> Username </strong> {{ form.username }}</p>
+                     <p> <strong> Email </strong> {{ form.email }}</p>
+                     <p> <strong> Password </strong> {{ form.password }}</p>
+
 
                         <button type="submit" class="save btn btn-primary" id="submitButton"> Save </button>
                 </form>
@@ -32,6 +38,4 @@
 
         </div>
     </div>
-
-
 {% endblock %}

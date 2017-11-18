@@ -1,3 +1,36 @@
-{% for c in student %}
-    <a href="{% url 'result_add' pk4=pk4 pk=c.studentId.studentId pk1=pk1 pk2=pk2 pk3=c.courseNo.courseNo %}"> {{ c.courseNo.courseNo }}</a> <br>
-{% endfor %}
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <style>
+            .contents-wrapper{
+                padding-bottom: 5%;
+                position: absolute;
+                padding-left: 42%;
+                overflow: auto;
+            }
+            .padd{
+              display:inline-block;
+
+            }
+
+    </style>
+
+    <div class="contents-wrapper">
+            <div class="content faculty-list">
+
+                {% for c in student %}
+                    <li class="list-group-item">
+                        <div class="padd">
+                            <a href="{% url 'campus_admin:result_add' pk4=pk4 pk=c.studentId.studentId pk1=pk1 pk2=pk2 pk3=c.courseNo.courseNo %}"> {{ c.courseNo.courseNo }}</a> <br>
+                        </div>
+                    </li>
+
+                {% endfor %}
+
+            </div>
+    </div>
+
+
+{% endblock %}
+

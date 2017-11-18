@@ -6,6 +6,7 @@ from django.db import models
 from .validators import validate_file_extension
 
 class OfferedIn(models.Model):
+    acadYear = models.CharField(default='', max_length=200)
     semester = models.IntegerField(null=True, unique=True)
 
     def __str__(self):

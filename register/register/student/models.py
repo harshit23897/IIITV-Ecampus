@@ -31,23 +31,6 @@ class AssignmentSubmission(models.Model):
     def __str__(self):
         return self.file.name
 
-class Result(models.Model):
-    studentId = models.ForeignKey(student, related_name='student_id+')
-    semesterNo = models.ForeignKey(OfferedIn, null=True, related_name='semester+')
-    SPI = models.FloatField(default='',blank=True,null=True)
-
-    class Meta:
-        unique_together = (('semester','studentId'),)
-
-class FeeReceipt(models.Model):
-    studentId = models.ForeignKey(student,related_name='%(class)s_student_id',null=False,default="0")
-    semesterNo = models.ForeignKey(OfferedIn, related_name='semester+', null=True)
-    receiptId = models.CharField(max_length=30,null=False,blank=True,default="0")
-    status = models.CharField(max_length=50,null=False,blank=True,default='Not Paid')
-
-    class Meta:
-        unique_together = (('semester','student_id'),)
-
 class UserProfileManager(models.Manager):
     def get_queryset(self):
         return super(UserProfileManager, self).get_queryset().order_by('phone')

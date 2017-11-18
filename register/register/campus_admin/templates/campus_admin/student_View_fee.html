@@ -1,3 +1,40 @@
-{% for i in student %}
-    <a href="{% url 'sem_view_fee' pk=i.studentId pk1=i.batch %}">{{ i.studentName }}</a> <br>
-{% endfor %}
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <style>
+            .contents-wrapper{
+                padding-bottom: 5%;
+                position: absolute;
+                padding-left: 42%;
+                overflow: auto;
+            }
+            .padd{
+              display:inline-block;
+
+            }
+
+    </style>
+
+    <div class="contents-wrapper">
+            <div class="content faculty-list">
+
+                {% for i in student %}
+                    <li class="list-group-item">
+                        <div class="padd">
+                            <a href="{% url 'campus_admin:sem_view_fee' pk4=pk4 pk=i.studentId pk1=i.batch %}" s>{{ i.studentName }}</a> <br>
+                        </div>
+                    </li>
+
+                {% endfor %}
+
+            </div>
+    </div>
+
+
+
+
+
+
+{% endblock %}
+

@@ -1,5 +1,6 @@
 from django.shortcuts import render,get_object_or_404,redirect
-from .models import Student,Registers,FeeReceipt,Result
+from .models import Registers,FeeReceipt,Result
+from register.student.models import student
 from .forms import RegistersForm,FeeReceiptForm,CoursesForm,FacultyForm
 from django.http import HttpResponse
 import math
@@ -24,13 +25,13 @@ def result(request):
     # present_semester = student.semesterNo.semesterNo
     # args = {'present_acadYear':present_acadYear,'present_semester':present_semester}
 
-    all_batches = Student.objects.order_by('batch').values('batch').distinct()
+    all_batches = student.objects.order_by('batch').values('batch').distinct()
     # batches = tuple(all_batches)
     # length = len(batches)
     # number = len(batches)
     # for i in all_batches:
     #     print(i)
-    args = {'batches':all_batches}
+    args = {'batches': all_batches}
     return render(request, 'campus_admin/result_base.html', args)
 
 
@@ -45,7 +46,7 @@ def fee_receipt(request):
 
      # dictlist = []
 
-    all_batches = Student.objects.order_by('batch').values('batch').distinct()
+    all_batches = student.objects.order_by('batch').values('batch').distinct()
     # for key,value in all_batches.items():
      #   temp = [key,value]
       #  dictlist.append(temp)
@@ -59,14 +60,14 @@ def fee_receipt(request):
 
 
 def result_base(request,pk,pk4):
-    student = Student.objects.filter(batch=pk,programName=pk4)
-    args = {'student':student,'pk4':pk4}
+    student1 = student.objects.filter(batch=pk, program=pk4)
+    args = {'student':student1,'pk4':pk4}
     return render(request, 'campus_admin/student_View_result.html', args)
 
 
 def fee_receipt_base(request,pk,pk4):
-    student = Student.objects.filter(batch=pk,programName=pk4)
-    args = {'student':student,'pk4':pk4}
+    student1 = student.objects.filter(batch=pk, program=pk4)
+    args = {'student':student1,'pk4':pk4}
     return render(request, 'campus_admin/student_View_fee.html', args)
 
 

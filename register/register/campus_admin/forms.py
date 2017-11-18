@@ -1,10 +1,9 @@
 from django import forms
 from django.contrib.auth.models import User
+import django.contrib.auth.password_validation as validators
+from django.core import exceptions
 from register.course.models import course
 from .models import Registers,FeeReceipt
-
-
-
 
 class CoursesForm(forms.ModelForm):
 
@@ -39,19 +38,21 @@ class CoursesForm(forms.ModelForm):
 
 
     def clean_courseName(self):
-        courseName = self.cleaned_data['courseName']
-        if courseName.__len__() != 0:
-            if Courses.objects.filter(courseName=courseName):
-                raise forms.ValidationError("CourseName already exists")
+        course_name = self.cleaned_data['course_name']
+        if course_name.__len__() != 0:
+            if course.objects.filter(course_name=course_name):
+                raise forms.ValidationError("Course Name already exists")
         else:
             raise forms.ValidationError("Please Enter a valid CourseName")
-        return courseName
+        return course_name
 
-    def clean_assigned_to(self):
+    def clean_faculty(self):
         facultyList = User.objects.filter(groups__name='faculty')
-        facultyName = self.cleaned_data['assigned_to']
-        if Courses.objects.filter(assigned_to=facultyName):
-            raise forms.ValidationError(facultyName.facultyName +" is already assigned one course ")
+        facultyName = self.cleaned_data['faculty']
+        courses_of_current_faculty = course.objects.filter(faculty=facultyName)
+        course_name = self.cleaned_data['course_name']
+        if course_name in courses_of_current_faculty:
+            raise forms.ValidationError(facultyName.facultyName +" is already assigned this course ")
 
         return facultyName
 
@@ -90,26 +91,47 @@ class FeeReceiptForm(forms.ModelForm):
 class FacultyForm(forms.ModelForm):
 
     class Meta:
-        model = Faculty
-        fields = ['facultyId','facultyName']
+        model = User
+        fields = ['first_name', 'last_name', 'username', 'email', 'password',]
 
-    def clean_facultyId(self):
-        facultyId = self.cleaned_data['facultyId']
-        if facultyId != 0:
-            if Faculty.objects.filter(facultyId = facultyId) and  facultyId != 0:
-                raise forms.ValidationError("FacultyId already exists")
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if username != 0:
+            if User.objects.filter(username = username) and  username != 0:
+                raise forms.ValidationError("Username already exists")
         else:
-            raise forms.ValidationError("Enter Valid FacultyId")
-        return facultyId
+            raise forms.ValidationError("Enter Valid username")
+        return username
 
-    def clean_facultyName(self):
-        facultyName = self.cleaned_data['facultyName']
-        if facultyName != None:
-            if Faculty.objects.filter(facultyName = facultyName):
-                raise forms.ValidationError("FacultyName already exists")
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if email != None:
+            if User.objects.filter(email = email):
+                raise forms.ValidationError("Email already exists.")
         else:
             raise forms.ValidationError("Enter Valid FacultyName")
-        return facultyName
+        return email
+
+    def first_name(self):
+        first_name = self.cleaned_data['first_name']
+        if first_name == None:
+            raise forms.ValidationError("Please enter First name.")
+        return first_name
+
+    def last_name(self):
+        last_name = self.cleaned_data['last_name']
+        if last_name == None:
+            raise forms.ValidationError("Please enter last name.")
+        return last_name
+
+    def validate(self):
+        password = self.cleaned_data['password']
+        errors = dict()
+        try:
+            validators.validate_password(password=password, user=User)
+        except exceptions.ValidationError as e:
+            errors['password'] = list(e.messages)
+        return password
 
 ''' 
 class ResultForm(forms.ModelForm):

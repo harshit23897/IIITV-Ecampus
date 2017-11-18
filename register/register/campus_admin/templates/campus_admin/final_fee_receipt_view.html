@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% load mathfilters %}
+
+{% block content %}
+
+    <style>
+            .cmnt{
+                text-align: center;
+                margin-top: 80px;
+                font-size: larger;
+                font-family: "Berlin Sans FB";
+                color: crimson;
+            }
+            .contents-wrapper{
+                padding-bottom: 5%;
+                position: absolute;
+                padding-left: 42%;
+                overflow: auto;
+            }
+            .padd{
+              display:inline-block;
+              width: 150px;
+
+            }
+    </style>
+
+    {% if value == 0 %}
+        <p class="cmnt"> <strong> Nothing to Show </strong> </p>
+        {% else %}
+              <div class="contents-wrapper">
+                  <div class="content list">
+                    {% with ''|center:value as range %}
+                    {% for _ in  range  %}
+                       {% with 0|add:forloop.counter  as pk2 %}
+                          <li class="list-group-item">
+                            <div class="padd">
+                                <a href="{% url 'campus_admin:fee_receipt_view' pk=pk pk1=pk1 pk2=pk2 pk4=pk4 %}"> Semester {{ pk2 }} Fee Receipt</a> <br>
+                            </div>
+                          </li>
+                       {% endwith %}
+                    {% endfor %}
+                    {% endwith %}
+                  </div>
+              </div>
+    {% endif %}
+{% endblock %}
+
+
