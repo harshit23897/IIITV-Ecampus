@@ -22,7 +22,7 @@
                 {% for i in student %}
                     <li class="list-group-item">
                         <div class="padd">
-                            <a href="{% url 'campus_admin:sem_view_fee' pk4=pk4 pk=i.studentId pk1=i.batch %}" s>{{ i.studentName }}</a> <br>
+                            <a href="{% url 'campus_admin:sem_view_fee' pk4=pk4 pk=i.student_id pk1=i.batch %}" s>{{ i.student_id }}</a> <br>
                         </div>
                     </li>
 
@@ -30,11 +30,5 @@
 
             </div>
     </div>
-
-
-
-
-
-
 {% endblock %}
 

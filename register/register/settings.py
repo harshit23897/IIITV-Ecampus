@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'register.qa',
     'register.qaforum',
     'markdownx',
+    'mathfilters',
     'hitcount',
     'annoying',
     'bootstrap3',

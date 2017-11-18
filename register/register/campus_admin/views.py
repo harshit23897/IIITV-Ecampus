@@ -1,3 +1,4 @@
+import datetime
 from django.shortcuts import render,get_object_or_404,redirect
 from .models import Registers,FeeReceipt,Result
 from register.student.models import student
@@ -47,6 +48,7 @@ def fee_receipt(request):
      # dictlist = []
 
     all_batches = student.objects.order_by('batch').values('batch').distinct()
+    print(all_batches)
     # for key,value in all_batches.items():
      #   temp = [key,value]
       #  dictlist.append(temp)
@@ -66,7 +68,9 @@ def result_base(request,pk,pk4):
 
 
 def fee_receipt_base(request,pk,pk4):
+    # print(student.objects.filter(batch=pk, program=pk4))
     student1 = student.objects.filter(batch=pk, program=pk4)
+    print(student1)
     args = {'student':student1,'pk4':pk4}
     return render(request, 'campus_admin/student_View_fee.html', args)
 
@@ -83,15 +87,18 @@ def sem_view_result(request,pk,pk1,pk4):
 
 
 def sem_view_fee(request,pk,pk1,pk4):
-    temp = FeeReceipt.objects.filter(studentId=pk)
-    semNo = temp.order_by('semesterNo').values('semesterNo').distinct()
-    max = semNo.aggregate(Max('semesterNo'))
-    value = max['semesterNo__max']
-
+    print(pk)
+    print(pk1)
+    print(pk4)
+    current_student = student.objects.get(student_id=pk)
+    # print(current_student)
+    current_semester = datetime.datetime.now().year - int(current_student.batch)
+    current_semester = current_semester * 2 + 1
+    # print(current_semester)
     #  max = int(max) - 1
     #  print(value)
     return render(request, 'campus_admin/semester_View_fee.html',
-                  {'pk': pk, 'pk1': pk1, 'pk4': pk4, 'value': value})
+                  {'pk': pk, 'pk1': pk1, 'pk4': pk4, 'pk2': current_semester})
 
 
 def course_list(request,pk,pk1,pk2,pk4):
@@ -183,7 +190,7 @@ def success_fee_receipt(request, pk4, pk1, pk, pk2, pk3):
 
 def fee_receipt_add(request,pk,pk1,pk2,pk4):
 
-    student = get_object_or_404(FeeReceipt, studentId=pk ,semesterNo=pk2)
+    current_student = student.objects.get(student_id=pk)
     form = FeeReceiptForm(request.POST or None, instance=student)
 
     if form.is_valid():

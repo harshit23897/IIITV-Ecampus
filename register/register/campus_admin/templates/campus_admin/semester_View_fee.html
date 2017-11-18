@@ -19,8 +19,7 @@
      <div class="contents-wrapper">
             <div class="content list">
 
-
-                {% with ''|center:value as range %}
+                {% with ''|center:pk2 as range %}
                 {% for _ in  range  %}
                    {% with 0|add:forloop.counter  as pk2 %}
                        <li class="list-group-item">
@@ -31,6 +30,7 @@
                    {% endwith %}
                 {% endfor %}
                 {% endwith %}
+
 
             </div>
      </div>
