@@ -13,13 +13,11 @@
             <li> <a href="/student/" >Home </a></li>
 			<li> <a href="/" class="dropdown-toggle" data-toggle="dropdown">Fee Details</a> </li>
 			<li> <a href="/" class="dropdown-toggle" data-toggle="dropdown">Results </a> </li>
-              {% comment %}
-			<li> <a href="{% url 'view_classmates' %}">Classmates </a> </li>
-			<li> <a href="{% url 'view_profile' %}" >Profile </a> </li>
+			<li> <a href="{% url 'student:view_classmates' %}">Classmates </a> </li>
+			<li> <a href="{% url 'student:view_profile' %}" >Profile </a> </li>
       <li> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings <b class="caret"></b></a>
               <ul class="dropdown-menu multi-level">
-                <li><a href="{% url 'edit_profile' %}">Edit Profile</a></li>
-                  {% endcomment %}
+                <li><a href="{% url 'student:edit_profile' %}">Edit Profile</a></li>
                 <li><a href="{% url 'auth_password_change' %}">Reset Password</a></li>
                 <li><a href="{% url 'auth_logout' %}">Logout</a></li>
 

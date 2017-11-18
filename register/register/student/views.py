@@ -10,7 +10,7 @@ from django.utils.translation import ugettext as _
 from django.db.models import Q
 from django.http import Http404
 from django.views.generic.list import ListView
-from .forms import AssignmentSubmissionForm
+from .forms import AssignmentSubmissionForm, UserForm, EditProfileForm
 from .models import student, AssignmentSubmission
 
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -143,6 +143,44 @@ def course_registration_view(request):
         else:
             raise Http404("Page not found.")
 
+@login_required
+@user_passes_test(lambda u: u.groups.all().count() == 0, login_url='/accounts/login/')
+def view_profile(request,  pk):
+    print(pk)
+    if pk:
+        user = User.objects.get(username=pk)
+
+    else:
+        user = request.user
+    args = {'user': user}
+    return render(request, 'profile.html', args)
+
+@login_required
+@user_passes_test(lambda u: u.groups.all().count() == 0, login_url='/accounts/login/')
+def edit_profile(request):
+
+    user_form = UserForm(request.POST or None, instance=request.user)
+    profile_form = EditProfileForm(request.POST or None, request.FILES, instance=request.user.userprofile)
+    print(user_form.is_valid())
+    print(profile_form.is_valid())
+    if user_form.is_valid() and profile_form.is_valid():
+        user_form.save()
+        profile_form.save()
+        url = redirect('student:view_profile')
+        return url
+
+
+    args = {'user_form': user_form,'profile_form':profile_form}
+    return render(request, 'edit_profile.html', args)
+
+@login_required
+@user_passes_test(lambda u: u.groups.all().count() == 0, login_url='/accounts/login/')
+def classmates(request):
+    current_student = student.objects.get(user_student=request.user)
+    print(current_student)
+    class_mates  = student.objects.filter(program=current_student.program, batch=current_student.batch)
+    args = {'class_mates': class_mates }
+    return render(request, "classmates.html", args)
 
 
 

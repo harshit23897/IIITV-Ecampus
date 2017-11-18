@@ -1,0 +1,44 @@
+{% extends 'student_view.html' %}
+{% load staticfiles %}
+{% block extend %}
+
+
+
+<div class="contents-wrapper">
+          <!-- Contents starts here -->
+          <div class="content faculty-list">
+              <h1>Classmates</h1>
+              <br>
+              {% for stud in class_mates %}
+              <li class="list-group-item">
+                <div style="display: inline-block">
+                  {% if user.userprofile.image %}
+               <a href="{{ user.userprofile.image.url }}">
+                <img src="{{ user.userprofile.image.url }}" style="float:left" class="img-circle" alt="Cinque Terre" width="30" height="30">
+                {% else %}
+                <img src="{% static 'qa/user.png' %}" style="float:left" class="img-circle" alt="Cinque Terre" width="30" height="30">
+                {% endif %}
+              </a> &emsp; </div>
+              <div class="pad" style="display: inline-block" ><a href="{% url 'student:view_profile_with_pk' pk=stud.user_student.username %}" align = "right"><h4>{{ stud.student_id }}</h4></a>
+              </div>
+              </li>
+
+              {% endfor %}
+
+
+
+
+          </div>
+      </div>
+
+  <style>
+    .contents-wrapper{
+
+    padding-bottom:5%;
+  }
+    .pad{
+      margin-top: 0px;
+    }
+
+  </style>
+{% endblock %}
