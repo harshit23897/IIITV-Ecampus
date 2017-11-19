@@ -19,7 +19,7 @@ urlpatterns = [
     # url(r'^faculty/course/(?P<pk>.+)/assignment/', include('register.assignment.urls', namespace='assignment')),
     url(r'^faculty/', include('register.faculty.urls', namespace='faculty')),
     url(r'^student/courses/(?P<course_no>.+)/forum/', include('register.qa.urls', namespace='qa')),
-    url(r'^student/forum/', include('register.qaforum.urls', namespace='qaforum')),
+    url(r'^forum/', include('register.qaforum.urls', namespace='qaforum')),
     url(r'^student/', include('register.student.urls', namespace='student')),
     url(r'^announcements/', include('register.announcements.urls', namespace='announcements')),
     url(r'^accounts/register/$', RegistrationView.as_view(form_class=NewRegistrationForm), name='registration_register'),

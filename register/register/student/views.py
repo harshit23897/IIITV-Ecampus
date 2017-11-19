@@ -11,7 +11,7 @@ from django.db.models import Q
 from django.http import Http404
 from django.views.generic.list import ListView
 from .forms import AssignmentSubmissionForm, UserForm, EditProfileForm
-from .models import student, AssignmentSubmission
+from .models import student, AssignmentSubmission, UserProfile
 
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect
@@ -145,20 +145,19 @@ def course_registration_view(request):
 
 @login_required
 @user_passes_test(lambda u: u.groups.all().count() == 0, login_url='/accounts/login/')
-def view_profile(request,  pk):
-    print(pk)
-    if pk:
-        user = User.objects.get(username=pk)
-
+def view_profile(request, **kwargs):
+    print(len(kwargs))
+    if len(kwargs) > 0:
+        user = student.objects.get(pk=kwargs['pk'])
     else:
         user = request.user
+    print(user)
     args = {'user': user}
     return render(request, 'profile.html', args)
 
 @login_required
 @user_passes_test(lambda u: u.groups.all().count() == 0, login_url='/accounts/login/')
 def edit_profile(request):
-
     user_form = UserForm(request.POST or None, instance=request.user)
     profile_form = EditProfileForm(request.POST or None, request.FILES, instance=request.user.userprofile)
     print(user_form.is_valid())
@@ -176,9 +175,11 @@ def edit_profile(request):
 @login_required
 @user_passes_test(lambda u: u.groups.all().count() == 0, login_url='/accounts/login/')
 def classmates(request):
+    print(request.user)
     current_student = student.objects.get(user_student=request.user)
     print(current_student)
     class_mates  = student.objects.filter(program=current_student.program, batch=current_student.batch)
+    print(class_mates)
     args = {'class_mates': class_mates }
     return render(request, "classmates.html", args)
 

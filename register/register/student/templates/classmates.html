@@ -19,7 +19,7 @@
                 <img src="{% static 'qa/user.png' %}" style="float:left" class="img-circle" alt="Cinque Terre" width="30" height="30">
                 {% endif %}
               </a> &emsp; </div>
-              <div class="pad" style="display: inline-block" ><a href="{% url 'student:view_profile_with_pk' pk=stud.user_student.username %}" align = "right"><h4>{{ stud.student_id }}</h4></a>
+              <div class="pad" style="display: inline-block" ><a href="{% url 'student:view_profile_with_pk' pk=stud.pk %}" align = "right"><h4>{{ stud.student_id }}</h4></a>
               </div>
               </li>
 

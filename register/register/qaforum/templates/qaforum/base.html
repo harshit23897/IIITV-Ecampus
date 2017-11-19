@@ -2,7 +2,9 @@
 {% load staticfiles %}
 {% block extend %}
 <div class="container">
-
+{% if request.user.groups.all.count > 0 %}
+    <p>Helllllllo</p>
+{% endif %}
 
 <title>Discussion Forum</title>
     <link rel="icon" type="image/png" href="static/qa/icon.ico">

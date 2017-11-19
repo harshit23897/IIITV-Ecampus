@@ -76,20 +76,18 @@ def fee_receipt_base(request,pk,pk4):
 
 
 def sem_view_result(request,pk,pk1,pk4):
-    temp = Registers.objects.filter(studentId=pk)
-    semNo = temp.order_by('semesterNo').values('semesterNo').distinct()
-    max = semNo.aggregate(Max('semesterNo'))
-    value = max['semesterNo__max']
-    value = value
+    current_student = student.objects.get(student_id=pk)
+    current_semester = datetime.datetime.now().year - int(current_student.batch)
+    current_semester = current_semester * 2 + 1
     #  max = int(max) - 1
     # print(value)
-    return render(request, 'campus_admin/semester_View_result.html', {'pk': pk, 'pk1': pk1, 'pk4': pk4, 'value': value})
+    return render(request, 'campus_admin/semester_View_result.html', {'pk': pk, 'pk1': pk1, 'pk4': pk4, 'value': current_semester})
 
 
 def sem_view_fee(request,pk,pk1,pk4):
-    print(pk)
-    print(pk1)
-    print(pk4)
+    # print(pk)
+    # print(pk1)
+    # print(pk4)
     current_student = student.objects.get(student_id=pk)
     # print(current_student)
     current_semester = datetime.datetime.now().year - int(current_student.batch)
@@ -102,7 +100,6 @@ def sem_view_fee(request,pk,pk1,pk4):
 
 
 def course_list(request,pk,pk1,pk2,pk4):
-
     student = Registers.objects.filter(studentId=pk,semesterNo=pk2)
     args = {'student':student,'pk1':pk1,'pk2':pk2,'pk4':pk4}
     return render(request,'campus_admin/course_list.html',args)
@@ -308,7 +305,6 @@ def calculate_points(pk,pk2,total):
 
 
 def fee_receipt_view(request,pk,pk1,pk2,pk4):
-
     fee = FeeReceipt.objects.get(studentId=pk,semesterNo=pk2)
     iterate = int(pk2) - 1
     return render(request, 'campus_admin/fee_receipt_view.html', {'fee': fee, 'pk1':pk1, 'pk2':pk2,'pk':pk,'pk4':pk4,'iterate':iterate})

@@ -11,8 +11,11 @@
             <div class="panel panel-login">
               <div class="panel-heading">
                 <div class="row">
-                  <div class="col-xs-6"  style="margin-left: 25%;">
-                    <a href="" class="active"  id="login-form-link">Login</a>
+                  <div class="col-xs-6">
+                    <a href="{% url 'auth_login' %}" class="active" id="login-form-link">Login</a>
+                  </div>
+                  <div class="col-xs-6">
+                    <a href="{% url 'registration_register' %}" id="register-form-link">Register</a>
                   </div>
                 </div>
                 <hr>
@@ -24,9 +27,20 @@
                         {% csrf_token %}
                       <div class="form-group" style="margin-top:20px">
                           <input autocomplete="off" type="text" name="username" id="username" tabindex="1" class="form-control"  placeholder="Username" value="">{{ username }}</input>
+                          {% if form.username.errors %}
+                            {% for error in form.username.errors %}
+                              <p><a href="#id_{{ field.name }}" class="error">{{ error|escape }}</a></p>
+                            {% endfor %}
+                          {% endif %}
                       </div>
                       <div class="form-group" style="margin-top:20px">
                           <input autocomplete="off" type="password" name="password" id="password" tabindex="2" class="form-control"  placeholder="Password">{{ password }}</input>
+                          {% if form.password.errors %}
+                          <p>Hello</p>
+                            {% for error in form.password.errors %}
+                              <p><a href="#id_{{ field.name }}" class="error">{{ error|escape }}</a></p>
+                            {% endfor %}
+                          {% endif %}
                       </div>
                         <input type="hidden" name="next" value="{% url 'index' %}" />
                         {% comment %}
