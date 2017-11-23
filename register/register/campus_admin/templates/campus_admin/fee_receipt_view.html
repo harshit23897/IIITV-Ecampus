@@ -1,19 +1,32 @@
+{% extends 'base.html' %}
+{% load mathfilters %}
 
-
-
-{% block head %}
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-{% endblock %}
 
 {% block content %}
 
-<table border="1" colspan="2" width="100%">
+    <style>
+        .temp{
+            margin-top: 50px;
+            padding:100px;
+
+        }
+        th{
+            border-top:2px solid black;
+            border-bottom: 2px solid black;
+            color: #447e9b;
+        }
+        td{
+             border-bottom: 2px solid black;
+        }
+    </style>
+
+    <h1 style="padding-left: 550px;"> <strong> Fee Details </strong>  </h1>
+
+<table border="1" align="center" colspan="2" width="80%" class="temp">
    <tr>
-         <th width="40%" align="center"> SemesterNo </th>
-         <th width="30%" align="center"> Receipt No </th>
-         <th width="30%" text-align="center"> Status </th>
+         <th width="40%" style="text-align:center;"> <strong> SemesterNo </strong> </th>
+         <th width="30%" style="text-align:center;"> <strong>  Receipt No </strong> </th>
+         <th width="30%" style="text-align:center;"> <strong> Status </strong> </th>
 
    </tr>
 
@@ -26,5 +39,15 @@
    </tr>
 
 </table>
+
 {% endblock %}
 
+{% comment %}
+ {% with ''|center:iterate as range %}
+    {% for _ in  range  %}
+       {% with pk2|sub:forloop.counter as pk2 %}
+           <a href="{% url 'campus_admin:result_view' pk=pk pk1=pk1 pk2=pk2 pk4=pk4 %}"> Semester {{ pk2 }} Grade Card</a> <br>
+       {% endwith %}
+    {% endfor %}
+    {% endwith %}
+{% endcomment %}

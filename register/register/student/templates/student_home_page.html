@@ -1,9 +1,226 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<header>
+    <nav>
+    <div class="navbar navbar-inverse navbar-custom" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse"
+                                data-target=".navbar-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li> <a href="/student/" >Home </a></li>
+			<li> <a href="/" class="dropdown-toggle" data-toggle="dropdown">Fee Details</a> </li>
+			<li> <a href="/" class="dropdown-toggle" data-toggle="dropdown">Results </a> </li>
+			<li> <a href="{% url 'student:view_classmates' %}">Classmates </a> </li>
+			<li> <a href="{% url 'student:view_profile' %}" >Profile </a> </li>
+      <li> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings <b class="caret"></b></a>
+              <ul class="dropdown-menu multi-level">
+                <li><a href="{% url 'student:edit_profile' %}">Edit Profile</a></li>
+                <li><a href="{% url 'auth_password_change' %}">Reset Password</a></li>
+                <li><a href="{% url 'auth_logout' %}">Logout</a></li>
+
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <!--/.nav-collapse -->
+      </div>
+    </div>
+
+  </nav>
+</header>
+
+<style type="text/css">
+
+.wrap {
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+}
+#divContent
+{
+    min-height: 100%;
+    height: auto !important; /*Cause footer to stick to bottom in IE 6*/
+    height: 100%;
+    margin: 0 auto -100px; /*Allow for footer height*/
+    vertical-align:bottom;
+}
+main1 {
+  -webkit-box-flex: 1;
+  -o-box-flex: 1;
+  box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+}
+@media (max-width: 800px) {
+  main1 {
+    -webkit-box-orient: vertical;
+    -o-box-orient: vertical;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+}
+aside,
+article {
+  overflow-y: scroll;
+  padding: 2em;
+}
+aside {
+  -webkit-box-flex: 1;
+  -o-box-flex: 1;
+  box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  background:#F0eeee;
+}
+article {
+  -webkit-box-flex: 2;
+  -o-box-flex: 2;
+  box-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+  background: #F0eeee;
+}
+h1 {
+  margin-top: 0;
+}
+.flex-container1{
+    min-height: 100%;
+    height: auto !important; /*Cause footer to stick to bottom in IE 6*/
+    margin: 0 auto -100px; /*Allow for footer height*/
+    vertical-align:bottom;
+
+	width: 100%;
+	margin: 0 auto;
+	display: -webkit-flex; /* Safari */
+	display: flex; /* Standard syntax */
+}
+.flex-container1 .column{
+	padding: 10px;
+	background: #FFFFFF;
+	-webkit-flex: 1; /* Safari */
+	-ms-flex: 1; /* IE 10 */
+	flex: 1; /* Standard syntax #b4bac0;*/
+}
+.flex-container1 .column.bg-alt{
+	background: #FFFFFF;
+}
+.wraper {
+  position: absolute;
+  top: 30%;
+  left: 48%;
+  margin: 0 auto -100px; /*Allow for footer height*/
+  height: auto !important; /*Cause footer to stick to bottom in IE 6*/
+  margin-left: -25% ;
+  text-align: center;
+}
+.button {
+  display: inline-block;
+  line-height: 3em;
+  padding: 0 1em;
+  background: #34343E;
+  border-radius: 0.125em;
+  background-clip: padding-box;
+
+  margin-right: 1em
+}
+
+a.button{
+  -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+  -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+  -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+  -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+  transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+  display: block;
+  margin: 20px auto;
+  max-width: 200px auto;
+  height: 50px ;
+  text-decoration: none;
+  border-radius: 4px;
+  padding: auto;
+}
+
+.button--ghost {
+	border: 1px solid #EEE !important;
+	background: none
+}
+
+.button--ghost--green {
+	border-color: #7CBDBA !important
+}
+
+a.button {
+  color: rgba(30, 22, 54, 0.6);
+  box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
+}
+
+a.button:hover {
+  color: rgba(255, 255, 255, 0.85);
+  box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
+}
+.btn-login {
+	background-color: #006E6D;
+	outline: none;
+	color: #fff;
+	font-size: 14px;
+	height: auto;
+	font-weight: normal;
+	padding: 14px 0;
+	text-transform: uppercase;
+	border-color: #006E6D;
+}
+.btn-login:hover,
+.btn-login:focus {
+	color: #fff;
+	background-color: #696969;
+	border-color: #696969;
+}
+</style>
+
+<div class="flex-container1">
+        <div class="column">
+                <div class="wrap">
+                    <main1>
+                        <aside >
+                            <div class="wraper">
+                                {% for course in student_courses %}
+                                    <a href="{% url 'student:student_course_detail_view' course_no=course  %}" class="button button--ghost button--ghost--green">{{ course }}</a>
+                                {% endfor %}
+                                    <a href="/forum" class="button button--ghost button--ghost--green">Forum</a>
+                            </div>
+                        </aside>
+                    </main1>
+                </div>
+		</div>
+        <div class="column bg-alt">
+		<div class="wrap">
+            <main1>
+                <article>
+                    <h1 style="text-align:center;text-color:#ff0000">Announcements</h1>
+                    {% for announcement in announcement_in_courses %}
+                        <p>{{ forloop.counter }}. {{ announcement.announcement }} - {{ announcement.announcementUser }}, {{ announcement.uploaded_at }}</p>
+                    {% endfor %}
+                </article>
+            </main1>
+        </div>
+		</div>
+</div>
+
+{% comment %}
 {% if user.is_authenticated %}
     <p><strong>Dear {{ user.username }} student, glad to have you here!</strong></p>
     <p>This is IIITV Ecampus</p>
     <p><a align="center" href="{% url 'student:student_course_list' %}">Courses</a></p>
+    <p><a href="{% url 'qaforum:qaforum_index' %}">Forum</a></p>
 {% endif %}
+{% endcomment %}
 {% endblock %}

@@ -12,13 +12,13 @@ from .models import Announcement
 # Create your views here.
 @login_required
 @user_passes_test(lambda u: u.groups.all()[0].name == 'faculty', login_url='/accounts/login/')
-def announcement_upload(request, pk):
+def announcement_upload(request, course_no):
     if request.method == 'POST':
         form = AnnouncementForm(request.POST, request.FILES)
         if form.is_valid():
             unsaved_form = form.save(commit=False)
         unsaved_form.announcementUser = request.user
-        currentCourse = course.objects.get(course_no=pk)
+        currentCourse = course.objects.get(courseNo=course_no)
         unsaved_form.announcementCourse = currentCourse
         unsaved_form.save()
         return redirect('index')
@@ -33,6 +33,6 @@ class AnnouncementView(LoginRequiredMixin ,ListView):
     template_name = 'announcement_view.html'
 
     def get_queryset(self):
-        print(self.kwargs['pk'])
+        print(self.kwargs['course_no'])
         return Announcement.objects.filter(announcementUser__username__exact=self.request.user,
-                                           announcementCourse__course_no__exact=self.kwargs['pk'])
+                                           announcementCourse__courseNo__exact=self.kwargs['course_no'])

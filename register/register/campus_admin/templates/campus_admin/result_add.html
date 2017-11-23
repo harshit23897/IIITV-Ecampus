@@ -1,8 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content%}
+    <style>
+            #outerPanel{
+                margin-top: 30px;
+            }
+            .styleForm{
+                text-align: center;
+            }
 
 
-{% block content %}
-    <form method="POST" class="post-form">{% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Save</button>
-    </form>
+    </style>
+
+    <div class="panel panel-default" id="outerPanel">
+        <div class="panel-body">
+            <div class="styleForm">
+                 <form method="POST" class="post-form" id="form">{% csrf_token %}
+                        {% for field, error in form.errors.items %}
+                             {% if field != '__all__' %}{% endif %}
+                                    {{ error | striptags }}
+                        {% endfor %}
+
+                     <p> <strong> Grade: </strong> {{ form.grade }}</p>
+
+                        <button type="submit" class="save btn btn-primary" id="submitButton"> Save </button>
+                </form>
+            </div>
+
+
+        </div>
+    </div>
+
+
 {% endblock %}

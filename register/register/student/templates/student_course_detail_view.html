@@ -1,7 +1,109 @@
-{% extends "base.html" %}
+{% extends 'student_view.html' %}
 
-{% block content %}
-    <p><a width="30%" align="center" href="{% url 'course:course_material_view' pk=pk %}">View Course Material</a></p>
-    <p><a width="30%" align="center" href="{% url 'student:student_assignment_files_list' pk=pk %}">View/Submit Assignment Material</a></p>
-    <p><a width="30%" align="center" href="{% url 'student:announcement_view' pk=pk %}">Announcements</a></p>
+{% load static %}
+{% block extend %}
+<style>
+.wraper {
+  position: absolute;
+  top: 30%;
+  left: 48%;
+  margin: 0 auto -100px; /*Allow for footer height*/
+  height: auto !important; /*Cause footer to stick to bottom in IE 6*/
+  margin-left: -25% ;
+  text-align: center;
+}
+.wrap {
+  min-height: 100px;
+  height: auto;
+  height: ;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+}
+.sidenav {
+    min-height: 92%;
+    height: auto;
+    width: 0;
+    position: absolute;
+    z-index: 1;
+    top: 168px;
+    left: 0;
+    background-color: #00000;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #a3a948;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+#main {
+    transition: margin-left .5s;
+    padding: 16px;
+}
+</style>
+
+<body class="wrap">
+        <main1>
+            <aside >
+                  <div id="mySidenav" class="sidenav">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                    <a href="{% url 'course:course_material_view' course_no=course_no %}">Course Material</a>
+                    <a href="{% url 'student:student_assignment_files_list' course_no=course_no %}">Assignments</a>
+                    <a href="{% url 'qa:qa_index' course_no=course_no %}">Discusion Forum</a>
+                  </div>
+
+                  <div id="main" >
+                    <div class="mainblock">
+
+
+                      <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;
+
+                        {% block bar %}
+                          {{course.courseNo.courseName}}
+                        {% endblock bar %}
+                      </span>
+
+                      {% block student_content %}
+                      {% endblock student_content %}
+
+                    </div>
+                  </div>
+                </div>
+            </aside>
+        </main1>
+
+</body>
+
+
+<script>
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft= "0";
+}
+</script>
 {% endblock %}

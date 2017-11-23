@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <style>
+            #outerPanel{
+                margin-top: 20px;
+            }
+            .styleForm{
+                text-align: center;
+                overflow: auto;
+            }
+            #submitButton{
+                margin-bottom: 20px;
+            }
+
+    </style>
+
+    <div class="panel panel-default" id="outerPanel">
+        <div class="panel-body">
+            <div class="styleForm">
+                 <form method="POST" class="post-form" id="form">{% csrf_token %}
+                        {% for field, error in form.errors.items %}
+                             {% if field != '__all__' %}{% endif %}
+                                    {{ error | striptags }} <br>
+                        {% endfor %}
+
+                     <p> <strong> First Name </strong> {{ form.first_name }}</p>
+                     <p> <strong> Last Name </strong> {{ form.last_name }}</p>
+                     <p> <strong> Username </strong> {{ form.username }}</p>
+                     <p> <strong> Email </strong> {{ form.email }}</p>
+                     <p> <strong> Password </strong> {{ form.password }}</p>
+
+
+                        <button type="submit" class="save btn btn-primary" id="submitButton"> Save </button>
+                </form>
+            </div>
+
+
+        </div>
+    </div>
+{% endblock %}

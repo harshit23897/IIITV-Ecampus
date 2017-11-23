@@ -1,10 +1,10 @@
-{% extends "base.html" %}
+{% extends "student_view.html" %}
 
-{% block content %}
+{% block extend %}
 
 <ul>
 	{% for obj in object_list %}
-		<li><a href="{% url 'student:student_course_detail_view' pk=obj %}">{{ obj }}</a><br/>
+		<li><a href="{% url 'student:student_course_detail_view' course_no=obj %}">{{ obj }}</a><br/>
 	{% endfor %}
 </ul>
 {% endblock %}

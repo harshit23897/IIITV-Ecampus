@@ -1,0 +1,113 @@
+{% extends "qaforum/base.html" %}
+{% load staticfiles %}
+
+{% block matter %}
+
+<div class="col-md-12">
+    <div class="col-md-12">
+
+    <ul class="nav nav-tabs nav-justified">
+        <li role="presentation" {% if active_tab == 'latest' %}class="active"{% endif %}><a href="#latest" data-toggle="tab"><span class="glyphicon glyphicon-th-list"></span> Latest</a></li>
+        <li role="presentation" {% if active_tab == 'unans' %}class="active"{% endif %}><a href="#unans" data-toggle="tab"><span class="glyphicon glyphicon-question-sign"></span> Unanswered <span class="badge">{{ totalnoans }}</span></a></li>
+
+    </ul>
+    <br/>
+<div class="tab-content">
+<div class="tab-pane {% if active_tab == 'latest' %}active{% endif %}" id="latest">
+{% if questions %}
+  {% for question in questions %}
+    <div class="row">
+      <div class="col-sm-1 ans"><small><div class="ques">{{ question.num_answers }}</div>Answers</small></div>
+      <div class="col-sm-1 ans"><small><div class="ques">{{ question.hit_count.hits }}</div>Views</small></div>
+      <p>
+
+        <h3><a href="{% url 'qaforum:qaforum_detail' pk=question.id %}">{{ question.title }}</a></h3>
+        <br/>
+        {% for tag in question.tags.all %}
+            <a href="{% url 'qaforum:qaforum_tag' tag.slug %}"><tag>{{ tag.slug }}</tag></a>
+        {% endfor %}
+        <small> {{ question.pub_date }}</small>
+      </p>
+    </div>
+    <hr>
+  {% endfor %}
+
+<div class="pagination">
+  {% if is_paginated %}
+      <div class="pagination">
+          <span class="page-links">
+              {% if page_obj.has_previous %}
+                  <a href="{% url 'qaforum:qaforum_index' %}?page={{ page_obj.previous_page_number }}">previous</a>
+              {% endif %}
+              <span class="page-current">
+                  Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+              </span>
+              {% if page_obj.has_next %}
+                  <a href="{% url 'qaforum:qaforum_index' %}?page={{ page_obj.next_page_number }}">next</a>
+              {% endif %}
+          </span>
+      </div>
+  {% endif %}
+</div>
+
+{% else %}
+<div class="alert alert-warning" role="alert">No Questions are available!</div>
+{% endif %}
+</div>
+
+<div class="tab-pane {% if active_tab == 'unans' %}active{% endif %}" id="unans">
+{% if noans %}
+  {% for question in noans %}
+  <div class="row">
+  <div class="col-sm-1 ans"><small><div class="ques">{{ question.num_answers }}</div>Answers</small></div>
+  <div class="col-sm-1 ans"><small><div class="ques">{{ question.hit_count.hits }}</div>Views</small></div>
+  <p>
+    {% if question.num_answers %}<span class="glyphicon glyphicon-fire" aria-hidden="true"></span>{% endif %} <a class="ques" href="{% url 'qaforum:qaforum_detail' pk=question.id %}">{{ question.title }}</a>
+    <br/>
+    {% for tag in question.tags.all %}
+        <a href="{% url 'qaforum:qaforum_tag' tag.slug %}"><tag>{{ tag.slug }}</tag></a>
+    {% endfor %}
+    <small> {{ question.pub_date }}</small>
+  </p>
+</div>
+<hr>
+  {% endfor %}
+
+{% else %}
+<div class="alert alert-warning" role="alert">No Questions are available!</div>
+{% endif %}
+<div class="pagination">
+    <span class="step-links">
+        {% if noans.has_previous %}
+            <a href="?noans_page={{ noans.previous_page_number }}&active_tab=unans">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ noans.number }} of {{ noans.paginator.num_pages }}.
+        </span>
+
+        {% if noans.has_next %}
+            <a href="?noans_page={{ noans.next_page_number }}&active_tab=unans">next</a>
+        {% endif %}
+    </span>
+</div>
+</div>
+
+
+
+  </div>
+
+</div>
+</div>
+
+<style >
+.cont{
+  padding-bottom: 5%;
+}
+p{
+  font-family: "Lucida Sans Unicode","Lucida Grande",sans-serif;
+  font-size: 1.2rem;
+  text-align: left;
+}
+</style>
+{% endblock matter %}

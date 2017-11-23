@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <table border="1" colspan="2" width="100%">
+       <tr>
+         <th width="20%">Student ID</td>
+         <th width="20%">Student Name</td>
+         <th width="30%">Submission Time</td>
+         <th width="30%">Download</td>
+       </tr>
+     {% for assignment in assignment_list %}
+        <tr>
+         <td width="20%">{{ assignment.student.email|slice:"9" }}</td>
+         <td width="20%">{{ assignment.student.username }}</td>
+         <td width="30%">{{ assignment.uploaded_at }}</td>
+         <td width="30%" align="center"><a href="/download/course-material/{{file.filename}}" style="text-decoration:None">Download here</a></td>
+        </tr>
+     {% endfor %}
+    </table>
+{% endblock %}

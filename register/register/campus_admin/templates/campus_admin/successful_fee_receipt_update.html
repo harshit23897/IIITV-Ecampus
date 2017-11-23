@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <style>
+        .done{
+            padding-left: 600px;
+            color: #609ab6;
+            font-size: large;
+            font-family: "Berlin Sans FB";
+        }
+        .temp{
+            margin-top: 50px;
+            font-size: large;
+            font-family: "Berlin Sans FB";
+        }
+    </style>
+
+	<p class="temp"> <strong> Successfully done </strong> </p>
+	<a href="{% url 'campus_admin:index' %}" class="done"> Return to Home </a> <br>
+    <a href="{% url 'campus_admin:fee_receipt_base' pk4=pk4 pk=pk1 %}" class="done" > Return to Student Page</a> <br>
+    <a href="{% url 'campus_admin:fee_receipt' %}" class="done" > Return to Batch</a>
+{% endblock %}

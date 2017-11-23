@@ -1,0 +1,55 @@
+{% extends 'student_view.html' %}
+
+{% block extend %}
+<div class="containers">
+<h3 style="text-align: center; margin-bottom: 50px;">Edit Profile</h3>
+
+<form  method="post" enctype="multipart/form-data">
+
+{% csrf_token %}
+<table class="table table-hover">
+<tbody style="text-align: left">
+  <tr>
+    <td>Username</td>
+    <td><input type="text" name="username"  id={{user_form.username}} </td>
+  </tr>
+  <tr>
+   <td >First Name</td>
+    <td><input type="text" name="first_name" id={{user_form.first_name}}</td>
+  </tr>
+  <tr>
+   <td >Last Name</td>
+    <td><input type="text" name="last_name" id={{user_form.last_name}}</td>
+  </tr>
+  <tr>
+   <td> Date of Birth</td>
+    <td><input type="Date" name="date_of_birth" id={{profile_form.date_of_birth}}</td>
+  </tr>
+   <tr>
+   <td> Email</td>
+    <td><input type="text" name="email" id={{profile_form.email}}</td>
+  </tr>
+  <td> Phone</td>
+   <td><input type="Number" name="phone" id={{profile_form.city}}</td>
+   </tr>
+   <td> City</td>
+    <td><input type="text" name="city" id={{profile_form.phone}}</td>
+  </tr>
+  <td> Image</td>
+   <td><input type="File" name="image" id=""</td>
+  </tr>
+
+</tbody>
+</table>
+<button type="submit" name="button">submit</button>
+</form>
+</div>
+<style>
+.containers{
+padding-bottom:10%;
+margin-left:100px;
+margin-right:100px;
+}
+</style>
+
+  {% endblock %}

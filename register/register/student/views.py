@@ -10,8 +10,8 @@ from django.utils.translation import ugettext as _
 from django.db.models import Q
 from django.http import Http404
 from django.views.generic.list import ListView
-from .forms import AssignmentSubmissionForm
-from .models import student, AssignmentSubmission
+from .forms import AssignmentSubmissionForm, UserForm, EditProfileForm
+from .models import student, AssignmentSubmission, UserProfile
 
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect
@@ -37,9 +37,12 @@ def student_home_page(request):
         student_.save()
         return redirect('student:course_registration_view')
     else:
+        student_courses = student.objects.filter(user_student=request.user)[0].course_no.all()
+        announcement_in_courses = Announcement.objects.filter(announcementCourse__in=student_courses)
         return render(request,
                       'student_home_page.html',
-                      {})
+                      {'student_courses': student_courses,
+                       'announcement_in_courses': announcement_in_courses})
 
 class StudentCourseList(LoginRequiredMixin, ListView):
     login_url = '/accounts/login/'
@@ -52,23 +55,23 @@ class StudentCourseList(LoginRequiredMixin, ListView):
         return student.objects.filter(user_student=self.request.user)[0].course_no.all()
 
 @login_required
-def student_course_detail_view(request, pk):
+def student_course_detail_view(request, course_no):
     template_name = 'student_course_detail_view.html'
     return render(request,
                   template_name,
-                  {'pk': pk})
+                  {'course_no': course_no})
 
 class AnnouncementView(LoginRequiredMixin, ListView):
     login_url = '/accounts/login/'
     template_name = "announcement_view.html"
 
     def get_queryset(self):
-        course_name = course.objects.get(course_no__exact=self.kwargs['pk'])
+        course_name = course.objects.get(courseNo__exact=self.kwargs['course_no'])
         announcements_in_current_course = Announcement.objects.filter(announcementCourse__exact=course_name)
         return announcements_in_current_course
 
 @login_required
-def student_assignment_files_list(request, pk):
+def student_assignment_files_list(request, course_no):
     if request.method == 'POST':
         form = AssignmentSubmissionForm(request.POST, request.FILES)
         current_assignment = AssignmentMaterial.objects.filter(id=request.POST['file.id'])
@@ -91,7 +94,7 @@ def student_assignment_files_list(request, pk):
             raise forms.ValidationError(_('The time of assignment submission has passed. Better luck next time.'))
         return redirect('student:student_home_page')
     else:
-        material = AssignmentMaterial.objects.filter(course_no=pk)
+        material = AssignmentMaterial.objects.filter(course_no=course_no)
         form = AssignmentSubmissionForm()
     return render(request, 'student_assignment_files_list.html', {
         'form': form,
@@ -106,31 +109,79 @@ def course_registration_view(request):
         print(request.POST.getlist('courses[]'))
         current_student = student.objects.filter(user_student=request.user)
         for selected_course in request.POST.getlist('courses[]'):
-            temp = course.objects.filter(course_no=selected_course)
+            temp = course.objects.filter(courseNo=selected_course)
             current_student[0].course_no.add(temp[0])
         print(current_student[0].course_no)
         return redirect('/')
     else:
         current_student = student.objects.get(user_student=request.user)
-        # print(current_student)
+        # print('Hello')
         if current_student.course_no.all().count() > 0:
             return redirect('student:student_home_page')
+        # print('Hello')
         current_semester = datetime.datetime.now().year - int(current_student.batch)
         current_semester = current_semester * 2 + 1
         # if int(datetime.datetime.now().month) >= 1 and int(datetime.datetime.now().month) <= 5:
         #     current_semester = current_semester + 1
         sem = OfferedIn.objects.filter(semester=current_semester)
-        courses_offered = course.objects.filter(offered_in=sem[0]).order_by('elective')
-        courses_offered_in_current_semester = CoursesInSemester.objects.filter(semester=sem[0])
-        # print(courses_offered_in_current_semester[0].number_of_core)
-        return render(request,
-                      'course_registration_view.html',
-                      {'number_of_core': courses_offered_in_current_semester[0].number_of_core,
-                       'number_of_electives': courses_offered_in_current_semester[0].number_of_electives,
-                       'courses_offered': courses_offered,
-                       'current_semester': current_semester
-                       })
+        # print('Hello')
+        if(sem.count() > 0):
+            courses_offered = course.objects.filter(offered_in=sem[0]).order_by('elective')
+            courses_offered_in_current_semester = CoursesInSemester.objects.filter(semester=sem[0])
+            # print('Hello')
+            # print(courses_offered_in_current_semester[0].number_of_core)
+            if courses_offered.count() > 0 and courses_offered_in_current_semester.count() > 0:
+                return render(request,
+                              'course_registration_view.html',
+                              {'number_of_core': courses_offered_in_current_semester[0].number_of_core,
+                               'number_of_electives': courses_offered_in_current_semester[0].number_of_electives,
+                               'courses_offered': courses_offered,
+                               'current_semester': current_semester
+                               })
+            else:
+                raise Http404("Page not found.")
+        else:
+            raise Http404("Page not found.")
 
+@login_required
+@user_passes_test(lambda u: u.groups.all().count() == 0, login_url='/accounts/login/')
+def view_profile(request, **kwargs):
+    print(len(kwargs))
+    if len(kwargs) > 0:
+        user = student.objects.get(pk=kwargs['pk'])
+    else:
+        user = request.user
+    print(user)
+    args = {'user': user}
+    return render(request, 'profile.html', args)
+
+@login_required
+@user_passes_test(lambda u: u.groups.all().count() == 0, login_url='/accounts/login/')
+def edit_profile(request):
+    user_form = UserForm(request.POST or None, instance=request.user)
+    profile_form = EditProfileForm(request.POST or None, request.FILES, instance=request.user.userprofile)
+    print(user_form.is_valid())
+    print(profile_form.is_valid())
+    if user_form.is_valid() and profile_form.is_valid():
+        user_form.save()
+        profile_form.save()
+        url = redirect('student:view_profile')
+        return url
+
+
+    args = {'user_form': user_form,'profile_form':profile_form}
+    return render(request, 'edit_profile.html', args)
+
+@login_required
+@user_passes_test(lambda u: u.groups.all().count() == 0, login_url='/accounts/login/')
+def classmates(request):
+    print(request.user)
+    current_student = student.objects.get(user_student=request.user)
+    print(current_student)
+    class_mates  = student.objects.filter(program=current_student.program, batch=current_student.batch)
+    print(class_mates)
+    args = {'class_mates': class_mates }
+    return render(request, "classmates.html", args)
 
 
 

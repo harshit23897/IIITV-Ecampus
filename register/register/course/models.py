@@ -6,13 +6,11 @@ from django.db import models
 from .validators import validate_file_extension
 
 class OfferedIn(models.Model):
+    acadYear = models.CharField(default='', max_length=200)
     semester = models.IntegerField(null=True, unique=True)
 
-    def __str__(self):
-        return str(self.semester)
-
 class course(models.Model):
-    course_no = models.CharField(max_length=20, unique=True)
+    courseNo = models.CharField(max_length=20, unique=True)
     course_name = models.CharField(max_length=100, null=True, unique=True)
     credits = models.IntegerField(null=True)
     elective = models.NullBooleanField()
@@ -26,10 +24,10 @@ class course(models.Model):
     faculty = models.ManyToManyField(User)
 
     def __str__(self):
-        return self.course_no
+        return self.courseNo
 
 class CourseMaterial(models.Model):
-    course_no = models.ForeignKey(course, to_field='course_no', null=True)
+    course_no = models.ForeignKey(course, to_field='courseNo', null=True)
     description = models.CharField(max_length=255, blank=True)
     file = models.FileField(upload_to='course/', validators=[validate_file_extension])
     uploaded_at = models.DateTimeField(auto_now_add=True, null=True)
@@ -43,7 +41,7 @@ class CourseMaterial(models.Model):
     #     return os.path.basename(self.file.name)
 
 class AssignmentMaterial(models.Model):
-    course_no = models.ForeignKey(course, to_field='course_no', null=True)
+    course_no = models.ForeignKey(course, to_field='courseNo', null=True)
     description = models.CharField(max_length=255, blank=True)
     file = models.FileField(upload_to='assignment/')
     submission_last_date = models.DateTimeField(null=True)

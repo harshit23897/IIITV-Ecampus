@@ -3,15 +3,17 @@
 {% block content %}
 <table border="1" colspan="2" width="100%">
    <tr>
-     <th width="30%">File Name</td>
+     <th width="20%">File Name</td>
      <th width="40%">Description</td>
-     <th width="30%">Download</td>
+     <th width="20%">Download</td>
+     <th width="20%">Submissions</td>
    </tr>
  {% for file in assignment_material %}
     <tr>
-     <td width="30%">{{ file.filename }}</td>
+     <td width="20%" style="...">{{ file.filename }}</td>
      <td width="40%">{{ file.description }}</td>
-     <td width="30%" align="center"><a href="/download/assignment-material/{{file.filename}}" style="text-decoration:None">Download here</a></td>
+     <td width="20%" align="center"><a href="/download/assignment-material/{{file.filename}}" style="text-decoration:None">Download here</a></td>
+     <td width="20%" align="center"><a href="{% url 'course:student_assignment_submission_view' course_no=course_no assignment_id=file.id %}" style="text-decoration:None">Assignment Submissions</a></td>
     </tr>
  {% endfor %}
 </table>

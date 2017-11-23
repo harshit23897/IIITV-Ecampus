@@ -27,24 +27,24 @@ def course_list_of_faculty(request):
 
 @login_required
 @user_passes_test(lambda u: u.groups.all()[0].name == 'faculty', login_url='/accounts/login/')
-def course_detail_view(request, pk):
-    current_course = course.objects.filter(faculty__username__exact=request.user, course_no=pk)
+def course_detail_view(request, course_no):
+    current_course = course.objects.filter(faculty__username__exact=request.user, courseNo=course_no)
     # print(courses_of_current_faculty)
     if len(current_course) > 0:
         template_name = 'course_detail_view.html'
         return render(request,
                       template_name,
-                      {'pk': pk})
+                      {'course_no': course_no})
     else:
         raise Http404("Page not found")
 
 @login_required
 @user_passes_test(lambda u: u.groups.all()[0].name == 'faculty', login_url='/accounts/login/')
-def course_material_upload(request, pk):
+def course_material_upload(request, course_no):
     # print('Joker')
     if request.method == 'POST':
         form = CourseMaterialForm(request.POST, request.FILES)
-        current_course = course.objects.filter(faculty__username__exact=request.user, course_no=pk)
+        current_course = course.objects.filter(faculty__username__exact=request.user, courseNo=course_no)
         if form.is_valid():
             file = form.cleaned_data['file']
             if file._size > 5242880:
@@ -57,7 +57,7 @@ def course_material_upload(request, pk):
             except Exception as e:
                 print(str(e))
             unsaved_form.save()
-            return redirect('course:course_material_upload', pk=pk)
+            return redirect('course:course_material_upload', course_no=course_no)
     else:
         form = CourseMaterialForm()
 
@@ -66,8 +66,8 @@ def course_material_upload(request, pk):
     })
 
 @login_required
-def files_list(request, pk):
-    material = CourseMaterial.objects.filter(course_no=pk)
+def files_list(request, course_no):
+    material = CourseMaterial.objects.filter(course_no=course_no)
     # material = CourseMaterial.objects.all()
     # for t in material:
     #     print(t.course_no)
@@ -78,10 +78,10 @@ def files_list(request, pk):
 
 @login_required
 @user_passes_test(lambda u: u.groups.all()[0].name == 'faculty', login_url='/accounts/login/')
-def assignment_material_upload(request, pk):
+def assignment_material_upload(request, course_no):
     if request.method == 'POST':
         form = AssignmentMaterialForm(request.POST, request.FILES)
-        current_assignment = course.objects.filter(faculty__username__exact=request.user, course_no=pk)
+        current_assignment = course.objects.filter(faculty__username__exact=request.user, courseNo=course_no)
         if form.is_valid():
             file = form.cleaned_data['file']
             if file._size > 5242880:
@@ -96,7 +96,7 @@ def assignment_material_upload(request, pk):
             unsaved_form.save()
         else:
             print(form.errors)
-        return redirect('course:assignment_material_upload', pk=pk)
+        return redirect('course:assignment_material_upload', course_no=course_no)
     else:
         form = AssignmentMaterialForm()
 
@@ -105,10 +105,11 @@ def assignment_material_upload(request, pk):
     })
 
 @login_required
-def assignment_files_list(request, pk):
-    material = AssignmentMaterial.objects.filter(course_no=pk)
+def assignment_files_list(request, course_no):
+    material = AssignmentMaterial.objects.filter(course_no=course_no)
     return render(request, 'assignment_material_view.html',
                               {'assignment_material': material,
+                               'course_no': course_no,
                                'path':settings.MEDIA_ROOT},
                               )
 

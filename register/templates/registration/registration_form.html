@@ -1,10 +1,81 @@
 {% extends "base.html" %}
+{% load static %}
 {% load i18n %}
 {% block content %}
-<h2>Register to enter into IIITV Ecampus</h2>
-<form class="pure-form pure-form-stacked" method="post" action=".">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <input class="pure-button pure-button-primary" type="submit" value="{% trans 'Submit' %}" />
-</form>
+<h2 align="center" xmlns="http://www.w3.org/1999/html">Register to enter into IIITV Ecampus</h2>
+<link rel="stylesheet" type="text/css" href="{% static 'css/ac.css' %}">
+<body>
+  <div class="container">
+      <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-login">
+          <div class="panel-heading">
+            <div class="row">
+               <div class="col-xs-6">
+                <a href="{% url 'auth_login' %}" class="active" id="login-form-link">Login</a>
+              </div>
+              <div class="col-xs-6">
+                <a href="{% url 'registration_register' %}" align="center" id="register-form-link">Register</a>
+              </div>
+              <form id="register-form" action="" method="post" role="form" style="display: block;">
+                  <div class="form-group">
+                    {% csrf_token %}
+                    <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="">{{ username }}</input>
+                    {% if form.username.errors %}
+                        {% for error in form.username.errors %}
+                          <p><a href="#id_{{ field.name }}" class="error">{{ error|escape }}</a></p>
+                        {% endfor %}
+                      </ul>
+                    {% endif %}
+                  </div>
+                  <div class="form-group">
+                    <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="">{{ email }}</input>
+                      {% if form.email.errors %}
+                        {% for error in form.email.errors %}
+                          <p><a href="#id_{{ field.name }}" class="error">{{ error|escape }}</a></p>
+                        {% endfor %}
+                      </ul>
+                    {% endif %}
+                  </div>
+                  <div class="form-group">
+                    <input type="password" name="password1" id="password1" tabindex="2" class="form-control" placeholder="Password">{{ password1 }}</input>
+                      {% if form.password1.errors %}
+                        {% for error in form.password1.errors %}
+                          <p><a href="#id_{{ field.name }}" class="error">{{ error|escape }}</a></p>
+                        {% endfor %}
+                      </ul>
+                    {% endif %}
+                  </div>
+                  <div class="form-group">
+                    <input type="password" name="password2" id="password2" tabindex="2" class="form-control" placeholder="Confirm Password">{{ password2 }}</input>
+                      {% if form.password2.errors %}
+                        {% for error in form.password2.errors %}
+                          <p><a href="#id_{{ field.name }}" class="error">{{ error|escape }}</a></p>
+                        {% endfor %}
+                      </ul>
+                    {% endif %}
+                  </div>
+                  <input type="hidden" name="next" value="{% url 'registration_complete' %}"/>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-6 col-sm-offset-3">
+                        <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Register Now">
+                      </div>
+                    </div>
+                  </div>
+                {% if messages %}
+                  {% for message in messages %}
+                    <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
+                  {% endfor %}
+                {% endif %}
+                {% if form.non_field_errors %}
+                    {{ form.non_field_errors }}
+                {% endif %}
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+  </div>
 {% endblock %}

@@ -1,0 +1,5 @@
+{% extends 'qa/create_answer.html' %}
+
+{% block action_url %}
+{% url 'qa:qa_update_answer' course_no=course_no answer_id=view.kwargs.answer_id %}
+{% endblock action_url %}

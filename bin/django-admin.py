@@ -1,4 +1,4 @@
-#!/Users/harshit/Desktop/SoftwareEngineering/Project/Ecampus/venv/bin/python3
+#!/Users/harshit/PycharmProjects/IIITV-Ecampus-cloned/bin/python3
 from django.core import management
 
 if __name__ == "__main__":

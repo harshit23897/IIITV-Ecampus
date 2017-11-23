@@ -1,12 +1,42 @@
-<a href="{% url 'campus_admin:fee_receipt_add'  pk=pk  pk1=pk1 pk2=1 %}"> Semester 1 </a> <br>
-<a href="#"> Semester 2 </a> <br>
-<a href="#"> Semester 3 </a> <br>
-<a href="#"> Semester 4 </a> <br>
-<a href="#"> Semester 5 </a> <br>
-<a href="#"> Semester 6 </a> <br>
-<a href="#"> Semester 7 </a> <br>
-<a href="#"> Semester 8 </a> <br>
+{% extends 'student_view.html' %}
+{% load mathfilters %}
 
+{% block content %}
+
+    <style>
+            .contents-wrapper{
+                padding-bottom: 5%;
+                position: absolute;
+                padding-left: 42%;
+                overflow: auto;
+            }
+            .padd{
+              display:inline-block;
+
+            }
+    </style>
+
+     <div class="contents-wrapper">
+            <div class="content list">
+
+                {% with ''|center:pk2 as range %}
+                {% for _ in  range  %}
+                   {% with 0|add:forloop.counter  as pk2 %}
+                       <li class="list-group-item">
+                         <div class="padd">
+                             <a href="{% url 'campus_admin:fee_receipt_add' pk=pk pk1=pk1 pk2=pk2 pk4=pk4 %}"> Semester {{ pk2 }}</a> <br>
+                         </div>
+                       </li>
+                   {% endwith %}
+                {% endfor %}
+                {% endwith %}
+
+
+            </div>
+     </div>
+
+
+{% endblock %}
 
 
 

@@ -52,10 +52,51 @@ INSTALLED_APPS = [
     'registration',
     'register.faculty',
     'register.student',
+    'register.qa',
+    'register.qaforum',
+    'markdownx',
+    'mathfilters',
+    'hitcount',
+    'annoying',
+    'bootstrap3',
+    'taggit',
     'register.announcements',
     'register.course',
     'register.campus_admin',
 ]
+
+QA_SETTINGS = {
+    'qa_messages': True,
+    'qa_description_optional': False,
+    'count_hits': True,
+    'reputation': {
+        'CREATE_QUESTION': 0,
+        'CREATE_ANSWER': 0,
+        'CREATE_ANSWER_COMMENT': 0,
+        'CREATE_QUESTION_COMMENT': 0,
+        'ACCEPT_ANSWER': 0,
+        'UPVOTE_QUESTION': 0,
+        'UPVOTE_ANSWER': 0,
+        'DOWNVOTE_QUESTION': 0,
+        'DOWNVOTE_ANSWER': 0,
+    }
+}
+QAFORUM_SETTINGS = {
+    'qaforum_messages': True,
+    'qaforum_description_optional': False,
+    'count_hits': True,
+    'reputation': {
+        'CREATE_QUESTION': 0,
+        'CREATE_ANSWER': 0,
+        'CREATE_ANSWER_COMMENT': 0,
+        'CREATE_QUESTION_COMMENT': 0,
+        'ACCEPT_ANSWER': 0,
+        'UPVOTE_QUESTION': 0,
+        'UPVOTE_ANSWER': 0,
+        'DOWNVOTE_QUESTION': 0,
+        'DOWNVOTE_ANSWER': 0,
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -76,6 +117,8 @@ TEMPLATES = [
             os.path.join(BASE_DIR, 'templates'),
             os.path.join(BASE_DIR, 'register', 'templates'),
             os.path.join(BASE_DIR, 'register/faculty', 'templates'),
+            os.path.join(BASE_DIR, 'register/qa', 'templates'),
+            os.path.join(BASE_DIR, 'register/qaforum', 'templates'),
             os.path.join(BASE_DIR, 'register/student', 'templates'),
             os.path.join(BASE_DIR, 'register/course', 'templates'),
             os.path.join(BASE_DIR, 'register/campus_admin', 'templates/campus_admin'),
@@ -149,11 +192,11 @@ USE_TZ = True
 
 ACCOUNT_ACTIVATION_DAYS = 7
 
-EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'testemailiiitv@gmail.com'
 EMAIL_HOST_PASSWORD = 'thisisnewpassword'
+EMAIL_HOST = 'smtp.gmail.com'
 
 
 # Static files (CSS, JavaScript, Images)
@@ -161,8 +204,8 @@ EMAIL_HOST_PASSWORD = 'thisisnewpassword'
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
-STATIC_URL = '/staticfiles/'
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+STATIC_URL = '/static/'
 
 # This is the URL where media files will go
 MEDIA_URL = '/media/'
@@ -170,7 +213,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Extra places for collectstatic to find staticfiles files.
 STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT, '..', 'static'),
+    os.path.join(PROJECT_ROOT, '..', 'staticfiles'),
 )
 
 # LOGGING = {

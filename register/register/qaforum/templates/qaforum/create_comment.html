@@ -1,0 +1,18 @@
+{% extends 'qaforum/base.html' %}
+
+{% block matter %}
+
+  {% if message %}
+    <strong>Enter a valid Answer!</strong>
+  {% endif %}
+
+  <form method="post" action="">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input class="btn pull-right btn-success" type="submit" value="Submit Comment" />
+  </form>
+    {{ form.media }}
+
+</div>
+
+{% endblock matter %}
